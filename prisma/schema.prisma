@@ -7,28 +7,177 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String?
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sessions  Session[]
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  PAID
 }
 
-model Session {
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  CANCELLED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          String    @default("patient")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  patientAppointments Appointment[] @relation("PatientAppointments")
+  doctor        Doctor?
+}
+
+model Doctor {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  specializationId String
+  specialization  Specialization @relation(fields: [specializationId], references: [id])
+  experienceYears Int       @default(0)
+  bio             String?
+  photoUrl        String?
+  rating          Float     @default(0)
+  reviewsCount    Int       @default(0)
+  services        Service[]
+  appointments    Appointment[]
+  timeSlots       TimeSlot[]
+  doctorReviews   DoctorReview[]
+}
+
+model Specialization {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  doctors   Doctor[]
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  duration    Int
+  doctorId    String
+  doctor      Doctor   @relation(fields: [doctorId], references: [id])
+  appointments Appointment[]
+}
+
+model TimeSlot {
+  id        String            @id @default(cuid())
+  doctorId  String
+  doctor    Doctor            @relation(fields: [doctorId], references: [id])
+  startTime DateTime
+  endTime   DateTime
+  status    TimeSlotStatus    @default(AVAILABLE)
+  appointment Appointment?
+}
+
+enum TimeSlotStatus {
+  AVAILABLE
+  BOOKED
+  BLOCKED
+}
+
+model Appointment {
+  id            String            @id @default(cuid())
+  patientId     String?
+  patient       User?             @relation("PatientAppointments", fields: [patientId], references: [id])
+  patientName   String?
+  patientPhone  String?
+  doctorId      String
+  doctor        Doctor            @relation(fields: [doctorId], references: [id])
+  serviceId     String
+  service       Service           @relation(fields: [serviceId], references: [id])
+  timeSlotId    String            @unique
+  timeSlot      TimeSlot          @relation(fields: [timeSlotId], references: [id])
+  status        AppointmentStatus @default(PENDING)
+  comment       String?
+  totalAmount   Float
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  clinicPayment ClinicPayment?
+  doctorReview  DoctorReview?
+  notifications Notification[]
+}
+
+model ClinicPayment {
+  id                String        @id @default(cuid())
+  appointmentId     String        @unique
+  appointment       Appointment   @relation(fields: [appointmentId], references: [id])
+  yookassaPaymentId String        @unique
+  amount            Float
+  currency          String        @default("RUB")
+  status            PaymentStatus @default(PENDING)
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model DoctorReview {
+  id            String      @id @default(cuid())
+  appointmentId String      @unique
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  doctorId      String
+  doctor        Doctor      @relation(fields: [doctorId], references: [id])
+  rating        Int
+  comment       String?
+  createdAt     DateTime    @default(now())
+}
+
+model ClinicReview {
   id        String   @id @default(cuid())
   userId    String
-  token     String   @unique
-  expiresAt DateTime
+  rating    Int
+  comment   String?
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum Role {
-  USER
-  ADMIN
-  MODERATOR
+model Notification {
+  id            String      @id @default(cuid())
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  message       String
+  isRead        Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+}
+enum MenuCategory {
+  BURGER
+  PIZZA
+  ROLL
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  COOKING
+  DELIVERING
+  DELIVERED
+}
+
+model MenuItem {
+  id          String      @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  category    MenuCategory
+  imageUrl    String
+  isAvailable Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  customerName     String
+  customerPhone    String
+  customerAddress  String
+  status           OrderStatus @default(PENDING)
+  totalPrice       Float
+  items            Json
+  createdAt        DateTime    @default(now())
 }

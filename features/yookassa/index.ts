@@ -1,4 +1,51 @@
 import crypto from "crypto";
+import { YooKassa } from "yookassa";
+
+// Инициализация SDK ЮКассы
+const yookassa = new YooKassa({
+  shopId: process.env.YOOKASSA_SHOP_ID || "",
+  secretKey: process.env.YOOKASSA_SECRET_KEY || "",
+});
+
+export type CreatePaymentParams = {
+  amount: number;
+  description: string;
+  appointmentId: string;
+  returnUrl: string;
+};
+
+export type CreatePaymentResult = {
+  paymentId: string;
+  confirmationUrl: string;
+};
+
+// Создание платежа
+export async function createPayment(params: CreatePaymentParams): Promise<CreatePaymentResult> {
+  const payment = await yookassa.createPayment({
+    amount: {
+      value: params.amount.toFixed(2),
+      currency: "RUB",
+    },
+    capture: true,
+    description: params.description,
+    metadata: {
+      appointment_id: params.appointmentId,
+    },
+    confirmation: {
+      type: "redirect",
+      return_url: params.returnUrl,
+    },
+  });
+
+  if (!payment.id || !payment.confirmation?.confirmation_url) {
+    throw new Error("Не удалось создать платёж");
+  }
+
+  return {
+    paymentId: payment.id,
+    confirmationUrl: payment.confirmation.confirmation_url,
+  };
+}
 
 // YooKassa webhook event types
 export type YookassaEvent = {

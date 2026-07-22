@@ -1,0 +1,267 @@
+﻿"use client";
+import { useRef, useState, useCallback, useEffect } from "react";
+
+const CANVAS_W_CONST = 1280;
+const CANVAS_W = 1280;
+const CANVAS_H = 3200;
+
+type EType = "brush" | "drop" | "veggie" | "block";
+
+interface El {
+  id: string;
+  label: string;
+  src: string;
+  x: number;
+  y: number;
+  w: number;
+  rotate: number;
+  type: EType;
+}
+
+const INIT: El[] = [
+  { id:"brush-0",  label:"brush-carrot",      type:"brush",  src:"/yeda/brushes/brush-carrot.png",     x:320,  y:40,   w:900, rotate:-30 },
+  { id:"brush-1",  label:"brush-skyblue",     type:"brush",  src:"/yeda/brushes/brush-skyblue.png",    x:-80,  y:380,  w:880, rotate:-15 },
+  { id:"brush-2",  label:"brush-blue",        type:"brush",  src:"/yeda/brushes/brush-blue.png",       x:920,  y:80,   w:820, rotate:90  },
+  { id:"brush-3",  label:"brush-zucchini",    type:"brush",  src:"/yeda/brushes/brush-zucchini.png",   x:880,  y:720,  w:860, rotate:48  },
+  { id:"brush-4",  label:"brush-strawberry",  type:"brush",  src:"/yeda/brushes/brush-strawberry.png", x:136,  y:1062, w:880, rotate:-55 },
+  { id:"brush-5",  label:"brush-blue-2",      type:"brush",  src:"/yeda/brushes/brush-blue.png",       x:900,  y:1420, w:860, rotate:25  },
+  { id:"brush-6",  label:"brush-raspberry",   type:"brush",  src:"/yeda/brushes/brush-raspberry.png",  x:-40,  y:1760, w:900, rotate:-20 },
+  { id:"brush-7",  label:"brush-carrot-2",    type:"brush",  src:"/yeda/brushes/brush-carrot.png",     x:880,  y:2100, w:860, rotate:60  },
+  { id:"brush-8",  label:"brush-skyblue-2",   type:"brush",  src:"/yeda/brushes/brush-skyblue.png",    x:-60,  y:2440, w:880, rotate:-35 },
+  { id:"brush-9",  label:"brush-zucchini-2",  type:"brush",  src:"/yeda/brushes/brush-zucchini.png",   x:860,  y:2780, w:860, rotate:42  },
+  { id:"brush-10", label:"brush-raspberry-2", type:"brush",  src:"/yeda/brushes/brush-raspberry.png",  x:-40,  y:3000, w:880, rotate:-18 },
+  { id:"drop-0",   label:"drop-pink",         type:"drop",   src:"/yeda/brushes/drop-pink.png",        x:700,  y:600,  w:580, rotate:-30 },
+  { id:"drop-1",   label:"drop-blue",         type:"drop",   src:"/yeda/brushes/drop-blue.png",        x:120,  y:1300, w:560, rotate:50  },
+  { id:"drop-2",   label:"drop-orange",       type:"drop",   src:"/yeda/brushes/drop-orange.png",      x:720,  y:2020, w:580, rotate:-65 },
+  { id:"veggie-0", label:"carrot",            type:"veggie", src:"/yeda/carrot.png",                   x:80,   y:80,   w:210, rotate:25  },
+  { id:"veggie-1", label:"zucchini",          type:"veggie", src:"/yeda/zucchini.png",                 x:620,  y:260,  w:230, rotate:-15 },
+  { id:"veggie-2", label:"broccoli",          type:"veggie", src:"/yeda/broccoli.png",                 x:820,  y:420,  w:220, rotate:20  },
+  { id:"veggie-3", label:"avocado",           type:"veggie", src:"/yeda/avocado.png",                  x:200,  y:700,  w:200, rotate:-30 },
+  { id:"veggie-4", label:"strawberry",        type:"veggie", src:"/yeda/strawberry.png",               x:760,  y:940,  w:185, rotate:12  },
+  { id:"veggie-5", label:"tomato",            type:"veggie", src:"/yeda/tomato.png",                   x:80,   y:1180, w:210, rotate:-18 },
+  { id:"veggie-6", label:"pepper",            type:"veggie", src:"/yeda/pepper.png",                   x:880,  y:1460, w:200, rotate:22  },
+  { id:"veggie-7", label:"raspberry",         type:"veggie", src:"/yeda/raspberry.png",                x:600,  y:1700, w:175, rotate:-12 },
+  { id:"veggie-8", label:"carrot-2",          type:"veggie", src:"/yeda/carrot.png",                   x:100,  y:1960, w:195, rotate:18  },
+  { id:"veggie-9", label:"broccoli-2",        type:"veggie", src:"/yeda/broccoli.png",                 x:580,  y:2220, w:215, rotate:-25 },
+  { id:"veggie-10",label:"avocado-2",         type:"veggie", src:"/yeda/avocado.png",                  x:60,   y:2500, w:200, rotate:15  },
+  { id:"veggie-11",label:"tomato-2",          type:"veggie", src:"/yeda/tomato.png",                   x:720,  y:2760, w:210, rotate:-20 },
+  { id:"veggie-12",label:"pepper-2",          type:"veggie", src:"/yeda/pepper.png",                   x:340,  y:2960, w:195, rotate:10  },
+  { id:"block-title",  label:"TITLE",         type:"block",  src:"",  x:60,   y:92,   w:600, rotate:0  },
+  { id:"block-tags",   label:"TAGS",          type:"block",  src:"",  x:520,  y:1040, w:240, rotate:0  },
+  { id:"block-btns",   label:"BUTTONS",       type:"block",  src:"",  x:466,  y:934,  w:340, rotate:0  },
+  { id:"block-fresh",  label:"Svezhie prod.", type:"block",  src:"",  x:60,   y:1090, w:380, rotate:0  },
+  { id:"block-delivery",label:"Dostavka",     type:"block",  src:"",  x:820,  y:1320, w:360, rotate:0  },
+  { id:"block-how",    label:"Kak rabotaet",  type:"block",  src:"",  x:60,   y:1500, w:380, rotate:0  },
+  { id:"block-why",    label:"Pochemu YEDA",  type:"block",  src:"",  x:520,  y:1840, w:380, rotate:0  },
+  { id:"block-ai",     label:"AI racion",     type:"block",  src:"",  x:60,   y:2160, w:420, rotate:0  },
+  { id:"block-sub",    label:"Podpiska",      type:"block",  src:"",  x:520,  y:2500, w:400, rotate:0  },
+  { id:"block-social", label:"Kontakty",      type:"block",  src:"",  x:60,   y:2560, w:360, rotate:0  },
+  { id:"block-footer", label:"Footer",        type:"block",  src:"",  x:60,   y:2900, w:500, rotate:0  },
+];
+
+function generateCode(els: El[]): string {
+  const brushes = els.filter(e => e.type === "brush");
+  const drops   = els.filter(e => e.type === "drop");
+  const veggies = els.filter(e => e.type === "veggie");
+  const blocks  = els.filter(e => e.type === "block");
+
+  const bCode = brushes.map(e =>
+    `  { src: '${e.src}', top: ${e.y}, left: ${e.x}, w: ${e.w}, rotate: ${e.rotate} },`
+  ).join("\n");
+
+  const dCode = drops.map(e =>
+    `  { src: '${e.src}', top: ${e.y}, left: ${e.x}, w: ${e.w}, rotate: ${e.rotate} },`
+  ).join("\n");
+
+  const vCode = veggies.map(e =>
+    `  { src: '${e.src}', top: ${e.y}, left: ${e.x}, w: ${e.w}, rotate: ${e.rotate} },`
+  ).join("\n");
+
+  const blCode = blocks.map(e =>
+    `  /* ${e.label} */ top: ${e.y}, left: ${e.x}`
+  ).join("\n");
+
+  return `// BRUSHES\n[\n${bCode}\n]\n\n// DROPS\n[\n${dCode}\n]\n\n// VEGGIES\n[\n${vCode}\n]\n\n// BLOCKS\n${blCode}`;
+}
+
+export default function EditorPage() {
+  const [scale, setScale] = useState(1.0);
+  useEffect(() => {
+    const update = () => setScale(document.documentElement.clientWidth / CANVAS_W);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  const [els, setEls] = useState<El[]>(INIT);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [filter, setFilter] = useState<EType | "all">("all");
+  const dragRef = useRef<{ id: string; startX: number; startY: number; origX: number; origY: number } | null>(null);
+
+  const onPointerDown = useCallback((e: React.PointerEvent, id: string) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    e.stopPropagation();
+    const el = els.find(el => el.id === id)!;
+    dragRef.current = { id, startX: e.clientX, startY: e.clientY, origX: el.x, origY: el.y };
+    setSelected(id);
+  }, [els]);
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragRef.current) return;
+    const { id, startX, startY, origX, origY } = dragRef.current;
+    const dx = (e.clientX - startX) / scale;
+    const dy = (e.clientY - startY) / scale;
+    setEls(prev => prev.map(el => el.id === id ? { ...el, x: Math.round(origX + dx), y: Math.round(origY + dy) } : el));
+  }, []);
+
+  const onPointerUp = useCallback(() => { dragRef.current = null; }, []);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(generateCode(els));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const selectedEl = els.find(e => e.id === selected);
+  const visible = filter === "all" ? els : els.filter(e => e.type === filter);
+
+  const typeColor: Record<EType, string> = {
+    brush:  "rgba(249,115,22,0.18)",
+    drop:   "rgba(59,130,246,0.18)",
+    veggie: "rgba(34,197,94,0.18)",
+    block:  "rgba(168,85,247,0.18)",
+  };
+  const typeBorder: Record<EType, string> = {
+    brush:  "#f97316",
+    drop:   "#3b82f6",
+    veggie: "#22c55e",
+    block:  "#a855f7",
+  };
+
+  return (
+    <div style={{ width: "100%", maxWidth: "100%", minHeight: "100vh", overflowX: "hidden", background: "#111", color: "#fff", display: "flex", flexDirection: "column", fontFamily: "sans-serif", boxSizing: "border-box" }}>
+
+      {/* HEADER */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px", padding: "10px 20px", background: "#1a1a1a", borderBottom: "1px solid #333", flexWrap: "wrap" }}>
+        <span style={{ fontWeight: 700, fontSize: 16 }}>Visual Editor — HeroSection</span>
+        <span style={{ fontSize: 12, color: "#888" }}>Masshtab: {Math.round(scale * 100)}%</span>
+        {(["all","brush","drop","veggie","block"] as const).map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            style={{ padding: "4px 12px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600,
+              background: filter === f ? "#f97316" : "#333", color: filter === f ? "#fff" : "#aaa" }}>
+            {f}
+          </button>
+        ))}
+        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 12 }}>
+          {selectedEl && (
+            <span style={{ fontSize: 12, color: "#aaa" }}>
+              <b style={{ color: "#fff" }}>{selectedEl.label}</b> — x: {selectedEl.x} y: {selectedEl.y}
+            </span>
+          )}
+          <button onClick={handleCopy}
+            style={{ padding: "6px 18px", borderRadius: 20, border: "none", cursor: "pointer", fontWeight: 700, fontSize: 13,
+              background: copied ? "#22c55e" : "#f97316", color: "#fff" }}>
+            {copied ? "Skopirovano!" : "Kopirovat koordinaty"}
+          </button>
+        </div>
+      </div>
+
+      {/* CANVAS WRAPPER */}
+      <div style={{ flex: 1, overflow: "auto", padding: 0, boxSizing: "border-box", maxWidth: "100%" }}>
+        <div
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          style={{
+            position: "relative",
+            width: CANVAS_W * scale,
+            height: CANVAS_H * scale,
+            background: "#FFFDF9",
+            borderRadius: 8,
+            border: "1px solid #444",
+            overflow: "hidden",
+            flexShrink: 0,
+          }}
+        >
+          {/* GRID */}
+          <svg style={{ position: "absolute", inset: 0, pointerEvents: "none" }} width={CANVAS_W * scale} height={CANVAS_H * scale}>
+            <defs>
+              <pattern id="g" width={40 * scale} height={40 * scale} patternUnits="userSpaceOnUse">
+                <path d={`M ${40 * scale} 0 L 0 0 0 ${40 * scale}`} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#g)"/>
+          </svg>
+
+          {/* ELEMENTS */}
+          {visible.map(el => {
+            const isBlock = el.type === "block";
+            const isSelected = selected === el.id;
+            return (
+              <div
+                key={el.id}
+                onPointerDown={e => onPointerDown(e, el.id)}
+                style={{
+                  position: "absolute",
+                  left: el.x * scale,
+                  top: el.y * scale,
+                  width: el.w * scale,
+                  height: isBlock ? 60 * scale : el.w * scale,
+                  cursor: "grab",
+                  userSelect: "none",
+                  touchAction: "none",
+                  zIndex: isSelected ? 100 : el.type === "block" ? 10 : el.type === "veggie" ? 3 : el.type === "drop" ? 2 : 1,
+                  outline: isSelected ? `2px solid #fff` : `1.5px solid ${typeBorder[el.type]}`,
+                  borderRadius: 4,
+                  overflow: "visible",
+                }}
+              >
+                {el.src ? (
+                  <img
+                    src={el.src}
+                    alt={el.label}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      transform: `rotate(${el.rotate}deg)`,
+                      opacity: el.type === "brush" ? 0.6 : 1,
+                      display: "block",
+                      pointerEvents: "none",
+                    }}
+                  />
+                ) : (
+                  <div style={{
+                    width: "100%", height: "100%",
+                    background: typeColor[el.type],
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 10, fontWeight: 700, color: typeBorder[el.type],
+                    borderRadius: 4,
+                  }}>
+                    {el.label}
+                  </div>
+                )}
+                {/* Label tooltip */}
+                <div style={{
+                  position: "absolute", top: -18, left: 0,
+                  fontSize: 9, color: typeBorder[el.type], fontWeight: 700,
+                  whiteSpace: "nowrap", pointerEvents: "none",
+                  background: "rgba(0,0,0,0.5)", padding: "1px 4px", borderRadius: 3,
+                }}>
+                  {el.label}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* FOOTER — code output */}
+      <div style={{ padding: "12px 20px", background: "#1a1a1a", borderTop: "1px solid #333", maxHeight: 180, overflow: "auto" }}>
+        <p style={{ fontSize: 11, color: "#555", marginBottom: 6 }}>Koordinaty (gotovy dlya vstavki v HeroSection.tsx):</p>
+        <pre style={{ fontSize: 11, color: "#4ade80", fontFamily: "monospace", whiteSpace: "pre-wrap", margin: 0 }}>
+          {generateCode(els)}
+        </pre>
+      </div>
+    </div>
+  );
+}

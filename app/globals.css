@@ -1,18 +1,19 @@
 ﻿@tailwind base;
+html, body { margin: 0; padding: 0; overflow-x: hidden; box-sizing: border-box; }
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.1 0 0);
-    --card: oklch(1 0 0);
+    --background: #FFE4E8;
+    --foreground: #171717;
+    --card: #FFFFFF;
     --card-foreground: oklch(0.1 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.1 0 0);
-    --primary: oklch(0.205 0 0);
+    --primary: #E85D3F;
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
+    --secondary: #EFEAE2;
     --secondary-foreground: oklch(0.205 0 0);
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.4 0 0);
@@ -51,4 +52,20 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+}
+
+/* Улучшенная читаемость текста */
+p, li, span, div {
+  color: inherit;
+}
+.text-gray-500 { color: #1e3a5f !important; font-weight: 400; }
+.text-gray-600 { color: #1e3a5f !important; font-weight: 400; }
+.text-gray-700 { color: #1e3a5f !important; font-weight: 400; }
+
+@keyframes pulse-bright {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+}
+.nav-pulse {
+  animation: pulse-bright 2s ease-in-out infinite;
 }

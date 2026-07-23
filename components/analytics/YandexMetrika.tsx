@@ -1,10 +1,8 @@
-﻿'use client'
-
+'use client'
 import Script from 'next/script'
-
-const METRIKA_ID = 109390519
-
+const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || ''
 export function YandexMetrika() {
+  if (!METRIKA_ID) return null
   return (
     <>
       <Script id="yandex-metrika" strategy="afterInteractive">

@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 on:
   push:
     branches: [ master ]
@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          DATABASE_URL: postgresql://postgres:password@localhost:5432/myproject
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/template
           JWT_SECRET: ci-test-secret-key-32-chars-minimum
           GROQ_API_KEY: dummy-key-for-build
           NEXT_PUBLIC_APP_URL: http://localhost:3000

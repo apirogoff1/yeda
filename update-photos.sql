@@ -1,1 +1,0 @@
-UPDATE "Doctor" SET "photoUrl" = REPLACE("photoUrl", '/doctors/', '/photos/doctors/');

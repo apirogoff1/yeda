@@ -1,1 +1,0 @@
-﻿SELECT bio FROM "Doctor" LIMIT 1;

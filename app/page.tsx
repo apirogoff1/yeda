@@ -1,23 +1,13 @@
-﻿import { Navbar } from '@/components/landing/Navbar';
-import { HeroSection } from '@/components/landing/HeroSection';
-import { FeaturesSection } from '@/components/landing/FeaturesSection';
-import { PricingSection } from '@/components/landing/PricingSection';
-import { TestimonialsSection } from '@/components/landing/TestimonialsSection';
-import { SubscribeSection } from '@/components/landing/SubscribeSection';
-import { FAQSection } from '@/components/landing/FAQSection';
-import { Footer } from '@/components/landing/Footer';
+import Header from '@/components/layout/Header'
+import HeroSection from '@/components/home/HeroSection'
+import FloatingShapes from '@/components/home/FloatingShapes'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
+    <main style={{ backgroundColor: '#F5EAD8', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      <FloatingShapes />
+      <Header />
       <HeroSection />
-      <FeaturesSection />
-      <PricingSection />
-      <TestimonialsSection />
-      <SubscribeSection />
-      <FAQSection />
-      <Footer />
     </main>
-  );
+  )
 }

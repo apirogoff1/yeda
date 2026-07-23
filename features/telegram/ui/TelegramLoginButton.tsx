@@ -2,12 +2,10 @@
 import { useEffect, useRef } from "react";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
-
 export function TelegramLoginButton() {
   const ref = useRef<HTMLDivElement>(null);
   const setUser = useAuthStore((s) => s.setUser);
   const router = useRouter();
-
   useEffect(() => {
     if (!ref.current) return;
     const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME || "mybot";
@@ -20,7 +18,6 @@ export function TelegramLoginButton() {
     script.setAttribute("data-request-access", "write");
     script.async = true;
     ref.current.appendChild(script);
-
     (window as any).onTelegramAuth = async (user: Record<string, string>) => {
       try {
         const res = await fetch("/api/auth/telegram", {
@@ -33,22 +30,20 @@ export function TelegramLoginButton() {
           setUser(data.user);
           router.push("/dashboard");
         } else {
-          alert("Oshibka vhoda cherez Telegram");
+          alert("Ошибка входа через Telegram");
         }
       } catch {
-        alert("Oshibka soedineniya");
+        alert("Ошибка соединения");
       }
     };
-
     return () => {
       if (ref.current) ref.current.innerHTML = "";
       delete (window as any).onTelegramAuth;
     };
   }, []);
-
   return (
     <div className="flex flex-col items-center gap-2">
-      <p className="text-sm text-muted-foreground">ili</p>
+      <p className="text-sm text-slate-400">или</p>
       <div ref={ref} />
     </div>
   );

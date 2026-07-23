@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     await prisma.session.create({ data: { userId: user.id, token, expiresAt } });
     const response = NextResponse.json({ success: true, user: { id: user.id, email: user.email, name: user.name } });
-    response.cookies.set("auth-token", token, { httpOnly: true, secure: false, sameSite: "lax", expires: expiresAt });
+    response.cookies.set("token", token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: "lax", expires: expiresAt });
     return response;
   } catch (error) {
     console.error("Telegram auth error:", error);

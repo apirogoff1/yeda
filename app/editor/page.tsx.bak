@@ -64,9 +64,7 @@ const INIT: El[] = [
   { id:"block-delivery-tag-1",label:"Delivery tag1",type:"tag",   src:"", x:952, y:1459, w:360, rotate:0 },
   { id:"block-delivery-tag-2",label:"Delivery tag2",type:"tag",   src:"", x:935, y:1502, w:360, rotate:0 },
   { id:"block-how",          label:"Kak rabotaet",  type:"block", src:"", x:60,  y:1500, w:380, rotate:0 },
-  { id:"block-how-steps",    label:"How steps",     type:"tag",   src:"", x:60,  y:1620, w:380, rotate:0 },
   { id:"block-why",          label:"Pochemu YEDA",  type:"block", src:"", x:629, y:1929, w:380, rotate:0 },
-  { id:"block-why-tags",     label:"Why tags",      type:"tag",   src:"", x:664, y:2050, w:380, rotate:0 },
   { id:"block-ai",           label:"AI racion",     type:"block", src:"", x:60,  y:2160, w:420, rotate:0 },
   { id:"block-ai-tag-1",     label:"AI tag",        type:"tag",   src:"", x:60,  y:2220, w:420, rotate:0 },
   { id:"block-ai-btn",       label:"AI btn",        type:"tag",   src:"", x:60,  y:2290, w:420, rotate:0 },
@@ -75,7 +73,6 @@ const INIT: El[] = [
   { id:"block-sub-btn",      label:"Btn Podpisatsya",type:"tag",  src:"", x:920,  y:2567, w:180, rotate:0 },
   { id:"block-sub-tag-1",    label:"Sub tag",       type:"tag",   src:"", x:619, y:2587, w:400, rotate:0 },
   { id:"block-social",       label:"Kontakty",      type:"block", src:"", x:60,  y:2560, w:360, rotate:0 },
-  { id:"block-social-links", label:"Social links",  type:"tag",   src:"", x:61,  y:2720, w:360, rotate:0 },
   { id:"block-footer",       label:"Footer",        type:"block", src:"", x:60,  y:2900, w:500, rotate:0 },
 ];
 
@@ -117,21 +114,6 @@ export default function EditorPage() {
   }, []);
 
   const [els, setEls] = useState<El[]>(INIT);
-  useEffect(() => {
-    fetch("/api/editor-sync")
-      .then(r => r.json())
-      .then(data => {
-        if (!data.brushes) return;
-        const mapped: El[] = [
-          ...data.brushes.map((e: any, i: number) => ({ id: `brush-${i}`, label: `brush-${i}`, type: "brush" as EType, src: e.src, x: e.left, y: e.top, w: e.w, rotate: e.rotate })),
-          ...data.drops.map((e: any, i: number) => ({ id: `drop-${i}`, label: `drop-${i}`, type: "drop" as EType, src: e.src, x: e.left, y: e.top, w: e.w, rotate: e.rotate })),
-          ...data.veggies.map((e: any, i: number) => ({ id: `veggie-${i}`, label: e.src.split("/").pop()?.replace(".png","") || `veggie-${i}`, type: "veggie" as EType, src: e.src, x: e.left, y: e.top, w: e.w, rotate: e.rotate })),
-          ...(data.dishes || []).map((e: any, i: number) => ({ id: `dish-${i}`, label: `dish-${i}`, type: "dish" as EType, src: e.src, x: e.left, y: e.top, w: e.w, rotate: e.rotate })),
-          ...(data.blocks || []).map((e: any) => { const init = INIT.find(i => i.id === e.id); return init ? { ...init, x: e.left || init.x, y: e.top || init.y, w: e.w || init.w } : null; }).filter(Boolean) as El[],
-        ];
-        setEls(mapped);
-      });
-  }, []);
   const [selected, setSelected] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [filter, setFilter] = useState<EType | "all">("all");
@@ -313,7 +295,3 @@ export default function EditorPage() {
     </div>
   );
 }
-
-
-
-

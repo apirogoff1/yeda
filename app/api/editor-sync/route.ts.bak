@@ -1,7 +1,9 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+
 const HERO_PATH = path.join(process.cwd(), "components", "home", "HeroSection.tsx");
+
 export async function GET() {
   const content = fs.readFileSync(HERO_PATH, "utf8");
   const parseArray = (name: string) => {
@@ -23,7 +25,7 @@ export async function GET() {
       };
     });
   };
-  const blockIds = ["block-title","block-tags","block-btns","block-fresh","block-fresh-tag-1","block-delivery","block-delivery-tag-1","block-delivery-tag-2","block-how","block-how-steps","block-why","block-why-tags","block-ai","block-ai-tag-1","block-ai-btn","block-sub","block-sub-input","block-sub-btn","block-sub-tag-1","block-social","block-social-links","block-footer"];
+  const blockIds = ["block-title","block-tags","block-btns","block-fresh","block-fresh-tag-1","block-delivery","block-delivery-tag-1","block-delivery-tag-2","block-how","block-why","block-ai","block-ai-tag-1","block-ai-btn","block-sub","block-sub-tag-1","block-social","block-footer"];
   const blocks = blockIds.map(id => {
     const marker = `{/* BLOCK:${id} */}`;
     const mi = content.indexOf(marker);
@@ -41,26 +43,33 @@ export async function GET() {
     blocks,
   });
 }
+
 export async function POST(req: NextRequest) {
   const { elements } = await req.json();
   let content = fs.readFileSync(HERO_PATH, "utf8");
+
   const brushes = elements.filter((e: any) => e.type === "brush");
   const drops   = elements.filter((e: any) => e.type === "drop");
   const veggies = elements.filter((e: any) => e.type === "veggie");
   const dishes  = elements.filter((e: any) => e.type === "dish");
-  const blocks  = elements.filter((e: any) => e.type === "block" || e.type === "tag");
+  const blocks  = elements.filter((e: any) => e.type === "block");
+
   const toLine = (e: any) =>
     `  { src: '${e.src}', top: ${e.y}, left: ${e.x}, w: ${e.w}, rotate: ${e.rotate} },`;
+
   const replaceArray = (c: string, name: string, items: any[]) => {
     const start = c.indexOf(`const ${name} = [`);
     const end = c.indexOf("]", start) + 1;
     const newBlock = `const ${name} = [\n${items.map(e => toLine(e)).join("\n")}\n]`;
     return c.slice(0, start) + newBlock + c.slice(end);
   };
+
   content = replaceArray(content, "brushes", brushes);
   content = replaceArray(content, "drops",   drops);
   content = replaceArray(content, "veggies", veggies);
   content = replaceArray(content, "dishes",  dishes);
+
+  // Blocks: find by BLOCK:id marker, replace top/left in nearest style
   for (const b of blocks) {
     const marker = `{/* BLOCK:${b.id} */}`;
     const markerIdx = content.indexOf(marker);
@@ -70,13 +79,9 @@ export async function POST(req: NextRequest) {
     if (!styleMatch) continue;
     const styleIdx = markerIdx + after.indexOf(styleMatch[0]);
     const oldStyle = styleMatch[0];
-    const newStyle = oldStyle
-      .replace(/top: \d+/, `top: ${Math.round(b.y)}`)
-      .replace(/left: \d+/, `left: ${Math.round(b.x)}`);
+    const newStyle = oldStyle.replace(/top: \d+/, `top: ${b.y}`).replace(/left: \d+/, `left: ${b.x}`);
     content = content.slice(0, styleIdx) + newStyle + content.slice(styleIdx + oldStyle.length);
   }
   fs.writeFileSync(HERO_PATH, content, "utf8");
   return NextResponse.json({ ok: true });
 }
-
-

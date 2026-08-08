@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 const navItems = [
-  { label: 'Главная',      color: '#FF5A1F', y: 10,  href: '/'             },
-  { label: 'Меню',         color: '#42B883', y: -14, href: '/menu'         },
-  { label: 'Как работает', color: '#25A9E0', y: 6,   href: '/how-it-works' },
-  { label: 'Подписка',     color: '#B85CFF', y: -10, href: '/subscription' },
-  { label: 'Доставка',     color: '#FF5A1F', y: 14,  href: '/delivery'     },
-  { label: 'О компании',   color: '#42B883', y: -6,  href: '/about'        },
-  { label: 'FAQ',          color: '#25A9E0', y: 8,   href: '/faq'          },
-  { label: 'Контакты',     color: '#B85CFF', y: -12, href: '/contacts'     },
+  { label: 'Р“Р»Р°РІРЅР°СЏ',    color: '#FF5A1F', y: 10,  href: '/'             },
+  { label: 'РњРµРЅСЋ',       color: '#42B883', y: -14, href: '/menu'         },
+  { label: 'РљР°Рє СЂР°Р±РѕС‚Р°РµС‚', color: '#25A9E0', y: 6,   href: '/how-it-works' },
+  { label: 'РџРѕРґРїРёСЃРєР°',   color: '#B85CFF', y: -10, href: '/subscription' },
+  { label: 'Р”РѕСЃС‚Р°РІРєР°',   color: '#FF5A1F', y: 14,  href: '/delivery'     },
+  { label: 'Рћ РєРѕРјРїР°РЅРёРё', color: '#42B883', y: -6,  href: '/about'        },
+  { label: 'FAQ',        color: '#25A9E0', y: 8,   href: '/faq'          },
+  { label: 'РљРѕРЅС‚Р°РєС‚С‹',   color: '#B85CFF', y: -12, href: '/contacts'     },
 ]
 
 export default function Header() {
@@ -80,13 +80,12 @@ export default function Header() {
           ) : (
             <Link href="/login" style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", color: "#433932", textDecoration: "none", padding: "8px 16px" }}>Войти</Link>
           )}
-          <Link href="/cart" onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px) scale(1.03)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1.1)" }} onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0) scale(1)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1)" }} style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", background: "linear-gradient(135deg, #FF7A1A, #FF4E1A)", color: "#fff", borderRadius: "50px", padding: "12px 30px", boxShadow: "0 4px 16px rgba(255,90,31,0.35)", transition: "transform 0.22s, filter 0.22s", textDecoration: "none", display: "inline-block" }}>Заказать</Link>
+          <Link href="/menu?order=true" onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px) scale(1.03)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1.1)" }} onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0) scale(1)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1)" }} style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", background: "linear-gradient(135deg, #FF7A1A, #FF4E1A)", color: "#fff", borderRadius: "50px", padding: "12px 30px", boxShadow: "0 4px 16px rgba(255,90,31,0.35)", transition: "transform 0.22s, filter 0.22s", textDecoration: "none", display: "inline-block" }}>Заказать</Link>
         </div>
       </div>
     </header>
   )
 }
-
 
 
 

@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 const navItems = [
-  { label: 'Glavnaya',      color: '#FF5A1F', y: 10,  href: '/'             },
-  { label: 'Menyu',         color: '#42B883', y: -14, href: '/menu'         },
-  { label: 'Kak rabotaet', color: '#25A9E0', y: 6,   href: '/how-it-works' },
-  { label: 'Podpiska',     color: '#B85CFF', y: -10, href: '/subscription' },
-  { label: 'Dostavka',     color: '#FF5A1F', y: 14,  href: '/delivery'     },
-  { label: 'O kompanii',   color: '#42B883', y: -6,  href: '/about'        },
+  { label: 'Главная',      color: '#FF5A1F', y: 10,  href: '/'             },
+  { label: 'Меню',         color: '#42B883', y: -14, href: '/menu'         },
+  { label: 'Как работает', color: '#25A9E0', y: 6,   href: '/how-it-works' },
+  { label: 'Подписка',     color: '#B85CFF', y: -10, href: '/subscription' },
+  { label: 'Доставка',     color: '#FF5A1F', y: 14,  href: '/delivery'     },
+  { label: 'О компании',   color: '#42B883', y: -6,  href: '/about'        },
   { label: 'FAQ',          color: '#25A9E0', y: 8,   href: '/faq'          },
-  { label: 'Kontakty',     color: '#B85CFF', y: -12, href: '/contacts'     },
+  { label: 'Контакты',     color: '#B85CFF', y: -12, href: '/contacts'     },
 ]
 
 export default function Header() {
@@ -92,19 +92,19 @@ export default function Header() {
                 fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
                 color: '#433932', textDecoration: 'none', padding: '8px 16px',
               }}>
-                {userRole === 'ADMIN' ? 'Admin' : 'Kabinet'}
+                {userRole === 'ADMIN' ? 'Админка' : 'Личный кабинет'}
               </Link>
               <button onClick={handleLogout} style={{
                 fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
                 color: '#433932', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 16px',
               }}>
-                Vyyti
+                Выйти
               </button>
             </>
           ) : (
-            <Link href="/login" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', color: '#433932', textDecoration: 'none', padding: '8px 16px' }}>Voyti</Link>
+            <Link href="/login" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', color: '#433932', textDecoration: 'none', padding: '8px 16px' }}>Войти</Link>
           )}
-          <Link href="/cart" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', background: 'linear-gradient(135deg, #FF7A1A, #FF4E1A)', color: '#fff', borderRadius: '50px', padding: '12px 30px', boxShadow: '0 4px 16px rgba(255,90,31,0.35)', transition: 'transform 0.22s, filter 0.22s', textDecoration: 'none', display: 'inline-block' }}>Zakazat</Link>
+          <Link href="/cart" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', background: 'linear-gradient(135deg, #FF7A1A, #FF4E1A)', color: '#fff', borderRadius: '50px', padding: '12px 30px', boxShadow: '0 4px 16px rgba(255,90,31,0.35)', transition: 'transform 0.22s, filter 0.22s', textDecoration: 'none', display: 'inline-block' }}>Заказать</Link>
         </div>
       </div>
     </header>

@@ -1,0 +1,8 @@
+﻿content = open(r'C:\Users\raund\Desktop\portfolio\yeda\components\home\HeroSection.tsx', encoding='utf-8').read()
+content = content.replace("import Image from 'next/image'", "import Image from 'next/image'\nimport Link from 'next/link'")
+content = content.replace(">Заказать</button>", ">Заказать</Link>")
+content = content.replace(">Меню</button>", ">Меню</Link>")
+content = content.replace("<button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00'", "<Link href='/cart' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00'")
+content = content.replace("<button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent'", "<Link href='/menu' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent'")
+open(r'C:\Users\raund\Desktop\portfolio\yeda\components\home\HeroSection.tsx', 'w', encoding='utf-8').write(content)
+print('OK')

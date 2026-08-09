@@ -120,7 +120,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, scale: 0.7 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: 0.2 }}
+
           {...float(i)}
           style={{ position: 'absolute', top: v.top, left: v.left, width: v.w, zIndex: 3, pointerEvents: 'none' }}>
           <Image src={v.src} alt="" width={v.w} height={v.w} style={{ objectFit: 'contain', transform: `rotate(${v.rotate}deg)` }} />
@@ -291,6 +291,7 @@ export default function HeroSection() {
     </div>
   )
 }
+
 
 
 

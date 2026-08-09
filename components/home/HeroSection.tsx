@@ -2,6 +2,7 @@
 import FloatingShapes from '@/components/home/FloatingShapes'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const pillStyle = (bg: string) => ({
   display: 'inline-block',
@@ -144,8 +145,8 @@ export default function HeroSection() {
       {/* BLOCK:block-btns */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.7 }}
         style={{ position: 'absolute', top: 730, left: 294, zIndex: 10, display: 'flex', gap: '16px' }}>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Заказать</button>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent', color: '#5B2D8E', border: '2.5px solid #1a1a1a', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Меню</button>
+        <Link href='/cart' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Заказать</Link>
+        <Link href='/menu' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent', color: '#5B2D8E', border: '2.5px solid #1a1a1a', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Меню</Link>
       </motion.div>
 
       {/* BLOCK:block-fresh */}
@@ -291,6 +292,7 @@ export default function HeroSection() {
     </div>
   )
 }
+
 
 
 

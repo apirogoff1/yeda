@@ -1,6 +1,6 @@
 ﻿'use client'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const navItems = [
   { label: 'Главная',      color: '#FF5A1F', y: 10,  href: '/'             },
@@ -14,13 +14,7 @@ const navItems = [
 ]
 
 export default function Header() {
-  const [authed, setAuthed] = useState(false)
-  const [userRole, setUserRole] = useState<string | null>(null)
-  useEffect(() => {
-    fetch('/api/auth/me').then(r => r.json()).then(data => {
-      if (data.user) { setAuthed(true); setUserRole(data.user.role) }
-    }).catch(() => {})
-  }, [])
+  const [authed] = useState(false)
   const [hovered, setHovered] = useState<string | null>(null)
   const [logoHovered, setLogoHovered] = useState(false)
 
@@ -81,7 +75,7 @@ export default function Header() {
               fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
               color: '#433932', textDecoration: 'none', padding: '8px 16px',
             }}>
-              Личный кабинет
+              Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚
             </Link>
           ) : (
             <Link href="/login" style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", color: "#433932", textDecoration: "none", padding: "8px 16px" }}>Войти</Link>

@@ -1,28 +1,38 @@
 ﻿'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const navItems = [
-  { label: 'Главная',      color: '#FF5A1F', y: 10,  href: '/'             },
-  { label: 'Меню',         color: '#42B883', y: -14, href: '/menu'         },
-  { label: 'Как работает', color: '#25A9E0', y: 6,   href: '/how-it-works' },
-  { label: 'Подписка',     color: '#B85CFF', y: -10, href: '/subscription' },
-  { label: 'Доставка',     color: '#FF5A1F', y: 14,  href: '/delivery'     },
-  { label: 'О компании',   color: '#42B883', y: -6,  href: '/about'        },
+  { label: 'Glavnaya',      color: '#FF5A1F', y: 10,  href: '/'             },
+  { label: 'Menyu',         color: '#42B883', y: -14, href: '/menu'         },
+  { label: 'Kak rabotaet', color: '#25A9E0', y: 6,   href: '/how-it-works' },
+  { label: 'Podpiska',     color: '#B85CFF', y: -10, href: '/subscription' },
+  { label: 'Dostavka',     color: '#FF5A1F', y: 14,  href: '/delivery'     },
+  { label: 'O kompanii',   color: '#42B883', y: -6,  href: '/about'        },
   { label: 'FAQ',          color: '#25A9E0', y: 8,   href: '/faq'          },
-  { label: 'Контакты',     color: '#B85CFF', y: -12, href: '/contacts'     },
+  { label: 'Kontakty',     color: '#B85CFF', y: -12, href: '/contacts'     },
 ]
 
 export default function Header() {
   const [authed, setAuthed] = useState(false)
   const [userRole, setUserRole] = useState<string | null>(null)
+  const [hovered, setHovered] = useState<string | null>(null)
+  const [logoHovered, setLogoHovered] = useState(false)
+  const router = useRouter()
+
   useEffect(() => {
     fetch('/api/auth/me').then(r => r.json()).then(data => {
       if (data.user) { setAuthed(true); setUserRole(data.user.role) }
     }).catch(() => {})
   }, [])
-  const [hovered, setHovered] = useState<string | null>(null)
-  const [logoHovered, setLogoHovered] = useState(false)
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' })
+    setAuthed(false)
+    setUserRole(null)
+    router.push('/login')
+  }
 
   return (
     <header style={{
@@ -77,27 +87,26 @@ export default function Header() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {authed ? (
-            <Link href="/dashboard" style={{
-              fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
-              color: '#433932', textDecoration: 'none', padding: '8px 16px',
-            }}>
-              Личный кабинет
-            </Link>
+            <>
+              <Link href={userRole === 'ADMIN' ? '/admin' : '/dashboard'} style={{
+                fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
+                color: '#433932', textDecoration: 'none', padding: '8px 16px',
+              }}>
+                {userRole === 'ADMIN' ? 'Admin' : 'Kabinet'}
+              </Link>
+              <button onClick={handleLogout} style={{
+                fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
+                color: '#433932', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 16px',
+              }}>
+                Vyyti
+              </button>
+            </>
           ) : (
-            <Link href="/login" style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", color: "#433932", textDecoration: "none", padding: "8px 16px" }}>Войти</Link>
+            <Link href="/login" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', color: '#433932', textDecoration: 'none', padding: '8px 16px' }}>Voyti</Link>
           )}
-          <Link href="/cart" onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px) scale(1.03)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1.1)" }} onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0) scale(1)"; (e.currentTarget as HTMLAnchorElement).style.filter = "brightness(1)" }} style={{ fontFamily: "var(--font-geologica)", fontWeight: 900, fontSize: "18px", background: "linear-gradient(135deg, #FF7A1A, #FF4E1A)", color: "#fff", borderRadius: "50px", padding: "12px 30px", boxShadow: "0 4px 16px rgba(255,90,31,0.35)", transition: "transform 0.22s, filter 0.22s", textDecoration: "none", display: "inline-block" }}>Заказать</Link>
+          <Link href="/cart" style={{ fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px', background: 'linear-gradient(135deg, #FF7A1A, #FF4E1A)', color: '#fff', borderRadius: '50px', padding: '12px 30px', boxShadow: '0 4px 16px rgba(255,90,31,0.35)', transition: 'transform 0.22s, filter 0.22s', textDecoration: 'none', display: 'inline-block' }}>Zakazat</Link>
         </div>
       </div>
     </header>
   )
 }
-
-
-
-
-
-
-
-
-

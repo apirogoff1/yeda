@@ -9,7 +9,7 @@ async function loginRequest(data: LoginDto) {
     body: JSON.stringify(data),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error ?? 'Ошибка входа')
+  if (!res.ok) throw new Error(json.error ?? 'Oshibka vkhoda')
   return json
 }
 
@@ -20,7 +20,7 @@ async function registerRequest(data: RegisterDto) {
     body: JSON.stringify(data),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error ?? 'Ошибка регистрации')
+  if (!res.ok) throw new Error(json.error ?? 'Oshibka registratsii')
   return json
 }
 

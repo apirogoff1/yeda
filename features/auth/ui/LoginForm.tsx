@@ -17,7 +17,7 @@ export function LoginForm() {
   })
   const onSubmit = (data: LoginDto) => {
     login(data, {
-      onSuccess: (data) => router.push(data.user.role === 'admin' ? '/admin' : '/dashboard'),
+      onSuccess: (data) => router.push(data.user.role === 'ADMIN' ? '/admin' : '/dashboard'),
     })
   }
   return (

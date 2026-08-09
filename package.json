@@ -7,7 +7,8 @@
         "build": "prisma generate && next build",
         "start": "next start",
         "lint": "next lint",
-        "bot": "ts-node --project tsconfig.bot.json features/telegram/launch.ts"
+        "bot": "ts-node --project tsconfig.bot.json features/telegram/launch.ts",
+        "seed": "npx tsx prisma/seed.ts"
     },
     "dependencies": {
         "@ai-sdk/groq": "^3.0.39",
@@ -56,6 +57,8 @@
         "ts-node": "^10.9.2",
         "tsx": "^4.22.4",
         "typescript": "^5"
+    },
+    "prisma": {
+        "seed": "npx tsx prisma/seed.ts"
     }
 }
-

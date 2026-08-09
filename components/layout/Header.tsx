@@ -22,13 +22,16 @@ export default function Header() {
   const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/auth/me').then(r => r.json()).then(data => {
-      if (data.user) { setAuthed(true); setUserRole(data.user.role) }
-    }).catch(() => {})
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.json())
+      .then(data => {
+        if (data.user) { setAuthed(true); setUserRole(data.user.role) }
+      })
+      .catch(() => {})
   }, [])
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
     setAuthed(false)
     setUserRole(null)
     router.push('/login')

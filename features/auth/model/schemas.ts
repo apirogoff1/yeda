@@ -1,38 +1,35 @@
 ﻿import { z } from 'zod'
 
-// Схема для входа
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(1, 'Email обязателен')
-    .email('Введите корректный email'),
+    .min(1, 'Email obyazatelen')
+    .email('Vvedite korektnyy email'),
   password: z
     .string()
-    .min(8, 'Пароль минимум 8 символов'),
+    .min(6, 'Parol minimum 6 simvolov'),
 })
 
-// Схема для регистрации
 export const registerSchema = z.object({
   name: z
     .string()
-    .min(2, 'Имя минимум 2 символа')
-    .max(50, 'Имя максимум 50 символов'),
+    .min(2, 'Imya minimum 2 simvola')
+    .max(50, 'Imya maximum 50 simvolov'),
   email: z
     .string()
-    .min(1, 'Email обязателен')
-    .email('Введите корректный email'),
+    .min(1, 'Email obyazatelen')
+    .email('Vvedite korektnyy email'),
   password: z
     .string()
-    .min(8, 'Пароль минимум 8 символов')
-    .max(100, 'Пароль максимум 100 символов'),
+    .min(6, 'Parol minimum 6 simvolov')
+    .max(100, 'Parol maximum 100 simvolov'),
   confirmPassword: z
     .string()
-    .min(1, 'Подтвердите пароль'),
+    .min(1, 'Podtverdite parol'),
 }).refine(data => data.password === data.confirmPassword, {
-  message: 'Пароли не совпадают',
+  message: 'Paroli ne sovpadayut',
   path: ['confirmPassword'],
 })
 
-// TypeScript типы из схем
 export type LoginDto = z.infer<typeof loginSchema>
 export type RegisterDto = z.infer<typeof registerSchema>

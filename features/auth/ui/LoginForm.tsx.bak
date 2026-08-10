@@ -23,10 +23,8 @@ export function LoginForm() {
         console.log('role:', response.user.role)
         if (response.user.role === 'ADMIN') {
           router.push('/admin')
-          router.refresh()
         } else {
           router.push('/dashboard')
-          router.refresh()
         }
       },
     })
@@ -73,4 +71,3 @@ export function LoginForm() {
     </form>
   )
 }
-

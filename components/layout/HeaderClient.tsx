@@ -78,12 +78,6 @@ export default function HeaderClient({ userRole }: { userRole: string | null }) 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {userRole ? (
             <>
-              <Link href={userRole === 'ADMIN' ? '/admin' : '/dashboard'} style={{
-                fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
-                color: '#433932', textDecoration: 'none', padding: '8px 16px',
-              }}>
-                {userRole === 'ADMIN' ? 'Админка' : 'Личный кабинет'}
-              </Link>
               <button onClick={handleLogout} style={{
                 fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
                 color: '#433932', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 16px',

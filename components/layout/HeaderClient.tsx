@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 const navItems = [
-  { label: 'Главная',      color: '#FF5A1F', y: 10,  href: '/'             },
   { label: 'Меню',         color: '#42B883', y: -14, href: '/menu'         },
   { label: 'Как работает', color: '#25A9E0', y: 6,   href: '/how-it-works' },
   { label: 'Подписка',     color: '#B85CFF', y: -10, href: '/subscription' },

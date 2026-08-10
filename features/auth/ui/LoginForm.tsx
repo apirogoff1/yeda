@@ -34,7 +34,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded-2xl shadow-xl flex flex-col gap-4 w-full max-w-sm">
-      <h1 className="text-2xl font-bold text-center text-gray-900">Vkhod</h1>
+      <h1 className="text-2xl font-bold text-center text-gray-900">Вход</h1>
       {error && (
         <div className="text-red-500 text-sm text-center">{error.message}</div>
       )}
@@ -51,7 +51,7 @@ export function LoginForm() {
         )}
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-700">Parol</label>
+        <label className="text-sm font-medium text-gray-700">Пароль</label>
         <PasswordInput
           {...register('password')}
           placeholder="••••••••"
@@ -65,10 +65,10 @@ export function LoginForm() {
         disabled={isPending}
         className="bg-indigo-600 text-white rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50 mt-2"
       >
-        {isPending ? 'Vkhodim...' : 'Voyti'}
+        {isPending ? 'Входим...' : 'Войти'}
       </button>
       <p className="text-sm text-center text-gray-500">
-        Net akkauneta? <a href="/register" className="text-indigo-600 hover:underline">Zaregistrirovatsya</a>
+        Нет аккаунта? <a href="/register" className="text-indigo-600 hover:underline">Зарегистрироваться</a>
       </p>
     </form>
   )

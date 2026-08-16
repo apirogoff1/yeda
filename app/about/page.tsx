@@ -50,6 +50,22 @@ export default function AboutPage() {
   return (
     <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden' }}>
       <FloatingShapes />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '0px', left: '-150px', width: '1100px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(12deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '775px', right: '-350px', width: '1000px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-145deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '1550px', left: '-200px', width: '920px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(55deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '2325px', right: '-280px', width: '980px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-30deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '3100px', left: '-250px', width: '1050px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(80deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '3875px', right: '-300px', width: '900px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-170deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '4650px', left: '-180px', width: '970px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(40deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '5425px', right: '-350px', width: '1050px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-60deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '6200px', left: '-280px', width: '900px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(125deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '6975px', right: '-120px', width: '1000px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-95deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '7750px', left: '-320px', width: '950px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(160deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '8525px', right: '-250px', width: '1100px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-20deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '9300px', left: '-200px', width: '980px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(45deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '10075px', right: '-300px', width: '1000px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-75deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '10850px', left: '-250px', width: '950px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(130deg)', filter: 'blur(1.5px)' }} />
+      <img src="/photo_yeda/brushes/brush-zucchini.png" alt="" style={{ position: 'absolute', top: '11625px', right: '-180px', width: '1050px', opacity: 0.38, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-160deg)', filter: 'blur(1.5px)' }} />
 
       {/* Плавающая навигация */}
       <div style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 200 }}>

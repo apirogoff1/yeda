@@ -114,7 +114,7 @@ export default function ContactPage() {
             <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '15px', color: ACCENT, fontWeight: 600, margin: 0 }}>hello@yeda.ru</p>
             <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '13px', color: TEXT_MED, margin: 0 }}>Po voprosam sotrudnichestva: partners@yeda.ru</p>
             
-              href="mailto:hello@yeda.ru"
+              <a href="mailto:hello@yeda.ru"
               style={{ marginTop: '8px', padding: '12px 24px', background: ACCENT, color: '#fff', border: 'none', borderRadius: '100px', fontFamily: 'var(--font-geologica)', fontSize: '15px', fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start', textDecoration: 'none', display: 'inline-block', transition: 'opacity 0.15s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}

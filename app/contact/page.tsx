@@ -97,7 +97,8 @@ export default function ContactPage() {
             <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '20px', fontWeight: 700, color: ACCENT, margin: 0 }}>+7 (495) 123-45-67</p>
             <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '14px', color: TEXT_MED, margin: 0 }}>Ezhednevno, 08:00–23:00</p>
             
-              href="tel:+74951234567"
+              
+              <a href="tel:+74951234567"
               style={{ marginTop: '8px', padding: '12px 24px', background: ACCENT, color: '#fff', border: 'none', borderRadius: '100px', fontFamily: 'var(--font-geologica)', fontSize: '15px', fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start', textDecoration: 'none', display: 'inline-block', transition: 'opacity 0.15s' }}
               onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
               onMouseLeave={e => (e.currentTarget.style.opacity = '1')}

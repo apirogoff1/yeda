@@ -28,7 +28,7 @@ export default function OrderPage({ params }: { params: Promise<{ id: string }> 
 
   useEffect(() => {
     if (user === null) return
-    if (user.role !== 'ADMIN') router.push('/login')
+    if ((user.role as string) !== 'ADMIN') router.push('/login')
   }, [user, router])
 
   useEffect(() => {

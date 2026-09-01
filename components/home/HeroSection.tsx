@@ -19,7 +19,7 @@ const pillStyle = (bg: string) => ({
 const brushes = [
   { src: '/photo_yeda/brushes/brush-carrot.png', top: -184, left: 316, w: 900, rotate: -30 },
   { src: '/photo_yeda/brushes/brush-skyblue.png', top: 914, left: 338, w: 880, rotate: -15 },
-  { src: '/photo_yeda/brushes/brush-blue.png', top: -30, left: 966, w: 820, rotate: 90 },
+  { src: '/photo_yeda/brushes/brush-blue.png', top: -30, left: 967, w: 820, rotate: 90 },
   { src: '/photo_yeda/brushes/brush-zucchini.png', top: 526, left: -199, w: 860, rotate: -102 },
   { src: '/photo_yeda/brushes/brush-strawberry.png', top: 1039, left: 845, w: 880, rotate: 125 },
   { src: '/photo_yeda/brushes/brush-blue.png', top: 1650, left: 745, w: 860, rotate: -125 },
@@ -31,9 +31,9 @@ const brushes = [
 ]
 
 const drops = [
-  { src: '/photo_yeda/brushes/drop-pink.png', top: 629, left: 668, w: 580, rotate: -30 },
-  { src: '/photo_yeda/brushes/drop-blue.png', top: 777, left: 981, w: 560, rotate: 50 },
-  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 1253, left: 63, w: 860, rotate: -150 },
+  { src: '/photo_yeda/brushes/drop-pink.png', top: 621, left: 827, w: 580, rotate: -30 },
+  { src: '/photo_yeda/brushes/drop-blue.png', top: 903, left: 1243, w: 560, rotate: 50 },
+  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 1180, left: -74, w: 860, rotate: -150 },
 ]
 
 const veggies = [
@@ -45,7 +45,7 @@ const veggies = [
   { src: '/photo_yeda/vegetables/strawberry.png', top: 618, left: 2, w: 185, rotate: 12 },
   { src: '/photo_yeda/vegetables/strawberry.png', top: 1816, left: 1249, w: 185, rotate: -15 },
   { src: '/photo_yeda/vegetables/tomato.png', top: 1380, left: 40, w: 210, rotate: -18 },
-  { src: '/photo_yeda/vegetables/pepper.png', top: 591, left: 548, w: 300, rotate: 22 },
+  { src: '/photo_yeda/vegetables/pepper.png', top: 609, left: 636, w: 300, rotate: 22 },
   { src: '/photo_yeda/vegetables/raspberry.png', top: 1773, left: 853, w: 175, rotate: -12 },
   { src: '/photo_yeda/vegetables/raspberry.png', top: 323, left: 802, w: 175, rotate: 15 },
   { src: '/photo_yeda/vegetables/carrot_1.png', top: 1662, left: 84, w: 212, rotate: 18 },
@@ -232,8 +232,8 @@ export default function HeroSection() {
 
       {/* BLOCK:block-ai-btn */}
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2375, left: 129, zIndex: 10, maxWidth: '420px' }}>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', backgroundColor: '#A855F7', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 36px', cursor: 'pointer' }}>Попробовать AI</button>
+        style={{ position: 'absolute', top: 2415, left: 251, zIndex: 10, maxWidth: '420px' }}>
+        <button onClick={() => window.location.href = '/ai-chat'} onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#9333EA')} onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#A855F7')} style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '17px', backgroundColor: '#A855F7', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(168, 85, 247, 0.5)', transition: 'background-color 0.2s ease' }}>Попробовать AI</button>
       </motion.div>
 
       {/* BLOCK:block-sub */}

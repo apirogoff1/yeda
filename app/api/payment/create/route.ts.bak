@@ -1,0 +1,50 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json()
+    const { items, total, name, phone, address } = body
+
+    // Отправляем письмо админу
+    const itemsHtml = items.map((i: any) =>
+      `<tr><td style="padding:8px;border-bottom:1px solid #eee">${i.name}</td><td style="padding:8px;border-bottom:1px solid #eee">${i.quantity} шт.</td><td style="padding:8px;border-bottom:1px solid #eee">${i.price * i.quantity}₽</td></tr>`
+    ).join('')
+
+    try {
+      await resend.emails.send({
+        from: 'YEDA <onboarding@resend.dev>',
+        to: ['apirogoff1@gmail.com'],
+        subject: `Новый заказ YEDA на ${total}₽`,
+        html: `
+          <h2 style="color:#FF4D00">Новый заказ!</h2>
+          <p><b>Имя:</b> ${name || 'Не указано'}</p>
+          <p><b>Телефон:</b> ${phone || 'Не указан'}</p>
+          <p><b>Адрес:</b> ${address || 'Не указан'}</p>
+          <h3>Состав заказа:</h3>
+          <table style="border-collapse:collapse;width:100%">
+            <tr style="background:#FF4D00;color:#fff">
+              <th style="padding:8px;text-align:left">Блюдо</th>
+              <th style="padding:8px;text-align:left">Кол-во</th>
+              <th style="padding:8px;text-align:left">Сумма</th>
+            </tr>
+            ${itemsHtml}
+          </table>
+          <h3>Итого: ${total}₽</h3>
+        `,
+      })
+    } catch (emailError) {
+      console.error('Email error:', emailError)
+    }
+
+    // Возвращаем ссылку на success страницу
+    const returnUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment-success`
+    return NextResponse.json({ confirmationUrl: returnUrl })
+
+  } catch (error) {
+    console.error('Payment error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}

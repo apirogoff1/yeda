@@ -1,0 +1,180 @@
+'use client'
+import { useRouter } from 'next/navigation'
+import FloatingShapes from '@/components/home/FloatingShapes'
+import { useAuthStore } from '@/store'
+import { useState, useEffect } from 'react'
+
+export default function DashboardPage() {
+  const router = useRouter()
+  const { user, logout, isAuthenticated } = useAuthStore()
+  const [address, setAddress] = useState('')
+  const [addressSaved, setAddressSaved] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('yeda_address')
+    if (saved) setAddress(saved)
+  }, [])
+
+  const handleLogout = () => {
+    logout()
+    router.push('/')
+  }
+
+  const handleSaveAddress = () => {
+    localStorage.setItem('yeda_address', address)
+    setAddressSaved(true)
+    setTimeout(() => setAddressSaved(false), 2000)
+  }
+
+  const font1 = 'var(--font-comfortaa)'
+  const font2 = 'var(--font-geologica)'
+  const accent = '#1A6FD4'
+  const dark = '#433932'
+  const card = {
+    background: 'rgba(255,255,255,0.65)',
+    borderRadius: '32px',
+    padding: '40px',
+    backdropFilter: 'blur(8px)',
+    marginBottom: '32px',
+  }
+
+  const initials = user?.name
+    ? user.name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2)
+    : '?'
+
+  const brushes = [
+    
+    { src: '/photo_yeda/brushes/brush-carrot.png', top: '100px', right: '-450px', width: '1200px', rotate: '170deg' },
+    { src: '/photo_yeda/brushes/brush-ezhevika.png', top: '500px', left: '-400px', width: '1200px', rotate: '-20deg' },
+    { src: '/photo_yeda/brushes/brush-lemon.png', top: '-80px', left: '-350px', width: '1200px', rotate: '15deg' },
+    { src: '/photo_yeda/brushes/brush-raspberry.png', top: '1000px', left: '-350px', width: '1200px', rotate: '-35deg' },
+    { src: '/photo_yeda/brushes/brush-skyblue.png', top: '1100px', right: '-420px', width: '1200px', rotate: '120deg' },
+    { src: '/photo_yeda/brushes/brush-strawberry.png', top: '1500px', left: '-380px', width: '1200px', rotate: '25deg' },
+    { src: '/photo_yeda/brushes/brush-zucchini.png', top: '1600px', right: '-400px', width: '1200px', rotate: '-60deg' },
+  ]
+
+  return (
+    <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden' }}>
+      <FloatingShapes />
+
+      {brushes.map((b, i) => (
+        <img key={i} src={b.src} alt="" style={{
+          position: 'absolute',
+          top: b.top,
+          left: b.left,
+          right: b.right,
+          width: b.width,
+          opacity: 0.4,
+          pointerEvents: 'none',
+          zIndex: 0,
+          transform: `rotate(${b.rotate})`,
+          filter: 'blur(1.5px)',
+        }} />
+      ))}
+
+      <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+
+        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+          <h1 style={{ fontFamily: font1, fontSize: '52px', fontWeight: 900, color: accent, marginBottom: '8px' }}>
+            Личный кабинет
+          </h1>
+          <p style={{ fontFamily: font2, fontSize: '18px', color: dark }}>
+            Управляйте своим аккаунтом и заказами
+          </p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '32px', alignItems: 'start' }}>
+
+          <div>
+            <div style={{ ...card, textAlign: 'center' }}>
+              <div style={{
+                width: '96px', height: '96px', borderRadius: '50%',
+                background: `linear-gradient(135deg, ${accent}, #ff8c42)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                margin: '0 auto 20px',
+                boxShadow: '0 8px 32px rgba(255,77,0,0.3)',
+                fontSize: '36px', fontWeight: 900, color: '#fff',
+                fontFamily: font1,
+              }}>
+                {initials}
+              </div>
+              <p style={{ fontFamily: font1, fontSize: '22px', fontWeight: 800, color: dark, marginBottom: '6px' }}>
+                {user?.name || 'Гость'}
+              </p>
+              <p style={{ fontFamily: font2, fontSize: '14px', color: '#888', marginBottom: '8px' }}>
+                {user?.email || ''}
+              </p>
+              <span style={{
+                display: 'inline-block', background: 'rgba(255,77,0,0.1)',
+                color: accent, fontFamily: font2, fontSize: '12px',
+                padding: '4px 14px', borderRadius: '50px', marginBottom: '28px'
+              }}>
+                {user?.role || 'user'}
+              </span>
+              <button onClick={handleLogout} style={{
+                width: '100%', padding: '14px', borderRadius: '50px',
+                border: `2px solid ${accent}`, background: 'transparent',
+                color: accent, fontFamily: font1, fontWeight: 700, fontSize: '15px',
+                cursor: 'pointer', transition: 'all 0.2s',
+              }}
+                onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = accent; (e.target as HTMLButtonElement).style.color = '#fff' }}
+                onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = 'transparent'; (e.target as HTMLButtonElement).style.color = accent }}
+              >
+                Выйти
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div style={card}>
+              <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>
+                Адрес доставки
+              </h2>
+              <input
+                value={address}
+                onChange={e => setAddress(e.target.value)}
+                placeholder="Улица, дом, квартира"
+                style={{
+                  width: '100%', padding: '14px 20px', borderRadius: '50px',
+                  border: `2px solid rgba(255,77,0,0.3)`, fontFamily: font2,
+                  fontSize: '15px', outline: 'none', background: '#fff',
+                  boxSizing: 'border-box' as const, marginBottom: '12px',
+                  transition: 'border-color 0.2s',
+                }}
+                onFocus={e => e.target.style.borderColor = accent}
+                onBlur={e => e.target.style.borderColor = 'rgba(255,77,0,0.3)'}
+              />
+              <button onClick={handleSaveAddress} style={{
+                background: addressSaved ? '#4CAF50' : accent,
+                color: '#fff', fontFamily: font1, fontWeight: 700,
+                fontSize: '15px', padding: '12px 32px', borderRadius: '50px',
+                border: 'none', cursor: 'pointer', transition: 'background 0.3s',
+              }}>
+                {addressSaved ? 'Сохранено!' : 'Сохранить адрес'}
+              </button>
+            </div>
+
+            <div style={card}>
+              <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>
+                История заказов
+              </h2>
+              <div style={{
+                textAlign: 'center', padding: '40px 20px',
+                background: 'rgba(255,77,0,0.04)', borderRadius: '20px',
+              }}>
+                <p style={{ fontSize: '48px', marginBottom: '12px' }}>🍽</p>
+                <p style={{ fontFamily: font1, fontSize: '18px', fontWeight: 700, color: dark, marginBottom: '8px' }}>
+                  Заказов пока нет
+                </p>
+                <p style={{ fontFamily: font2, fontSize: '14px', color: '#888' }}>
+                  Сделайте свой первый заказ в разделе Меню
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  )
+}

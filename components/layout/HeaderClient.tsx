@@ -1,7 +1,8 @@
 ﻿'use client'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
+import { useAuthStore } from '@/store'
 
 const navItems = [
   { label: 'Меню',         color: '#42B883', y: -14, href: '/menu'         },
@@ -14,9 +15,14 @@ const navItems = [
 ]
 
 export default function HeaderClient({ userRole }: { userRole: string | null }) {
+  const pathname = usePathname()
+  if (pathname.startsWith('/editor')) return null
   const [hovered, setHovered] = useState<string | null>(null)
   const [logoHovered, setLogoHovered] = useState(false)
   const router = useRouter()
+
+  const user = useAuthStore(state => state.user)
+  const initials = user?.name ? user.name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2) : 'ЛК'
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
@@ -78,6 +84,26 @@ export default function HeaderClient({ userRole }: { userRole: string | null }) 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {userRole ? (
             <>
+              <Link href="/dashboard"
+  onMouseEnter={() => setHovered('cabinet')}
+  onMouseLeave={() => setHovered(null)}
+  style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
+  title="Личный кабинет">
+  <div style={{
+    width: '42px', height: '42px', borderRadius: '50%',
+    background: hovered === 'cabinet' ? 'linear-gradient(135deg, #2196F3, #1565C0)' : 'linear-gradient(135deg, #1A6FD4, #0D47A1)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    boxShadow: hovered === 'cabinet' ? '0 8px 24px rgba(33,150,243,0.6)' : '0 3px 12px rgba(13,71,161,0.35)',
+    transform: hovered === 'cabinet' ? 'scale(1.13) rotate(-4deg)' : 'scale(1) rotate(0deg)',
+    transition: 'all 0.25s',
+    fontFamily: 'var(--font-comfortaa)',
+    fontSize: '22px', fontWeight: 900, color: '#fff', textShadow: '0 0 6px rgba(255,255,255,0.7)',
+    letterSpacing: '0.5px',
+    userSelect: 'none',
+  }}>
+    {initials}
+  </div>
+</Link>
               <button onClick={handleLogout} style={{
                 fontFamily: 'var(--font-geologica)', fontWeight: 900, fontSize: '18px',
                 color: '#433932', background: 'none', border: 'none', cursor: 'pointer', padding: '8px 16px',
@@ -98,7 +124,7 @@ export default function HeaderClient({ userRole }: { userRole: string | null }) 
             boxShadow: '0 4px 16px rgba(255,90,31,0.35)',
             transition: 'transform 0.22s, filter 0.22s',
             textDecoration: 'none', display: 'inline-block',
-          }}>Заказать</Link>
+          }}>Корзина</Link>
         </div>
       </div>
     </header>

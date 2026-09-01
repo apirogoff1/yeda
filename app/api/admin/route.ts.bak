@@ -1,0 +1,45 @@
+import { NextResponse } from 'next/server'
+import { prisma } from '@/shared/lib/prisma'
+
+export async function GET() {
+  try {
+    const [orders, subscriptions, users] = await Promise.all([
+      prisma.order.findMany({
+        include: { items: true },
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.subscription.findMany({
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.user.findMany({
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          createdAt: true,
+        },
+      }),
+    ])
+
+    const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0)
+    const newOrders = orders.filter(o => o.status === 'new').length
+
+    return NextResponse.json({
+      stats: {
+        totalOrders: orders.length,
+        totalRevenue,
+        newOrders,
+        totalSubscriptions: subscriptions.length,
+        totalUsers: users.length,
+      },
+      orders,
+      subscriptions,
+      users,
+    })
+  } catch (error) {
+    console.error('Admin API error:', error)
+    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+  }
+}

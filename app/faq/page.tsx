@@ -87,14 +87,14 @@ export default function FaqPage() {
   return (
     <>
       <style>{css}</style>
-      <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden', background: '#FFF8EF' }}>
+      <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden', background: '#F5EAD8' }}>
       <FloatingShapes />
 
-      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '-60px', left: '-120px', width: '1000px', opacity: 0.75, pointerEvents: 'none', zIndex: 0, transform: 'rotate(15deg)', filter: 'blur(0.3px)' }} />
-      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '400px', right: '-350px', width: '1100px', opacity: 0.7, pointerEvents: 'none', zIndex: 0, transform: 'rotate(120deg)', filter: 'blur(0.3px)' }} />
-      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '800px', left: '-280px', width: '1000px', opacity: 0.7, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-20deg)', filter: 'blur(0.3px)' }} />
-      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '1200px', right: '-300px', width: '1050px', opacity: 0.7, pointerEvents: 'none', zIndex: 0, transform: 'rotate(80deg)', filter: 'blur(0.3px)' }} />
-      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '1600px', left: '-200px', width: '1000px', opacity: 0.7, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-40deg)', filter: 'blur(0.3px)' }} />
+      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '-60px', left: '-120px', width: '1000px', opacity: 0.62, pointerEvents: 'none', zIndex: 0, transform: 'rotate(15deg)', filter: 'blur(1px)' }} />
+      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '400px', right: '-350px', width: '1100px', opacity: 0.62, pointerEvents: 'none', zIndex: 0, transform: 'rotate(120deg)', filter: 'blur(1px)' }} />
+      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '800px', left: '-280px', width: '1000px', opacity: 0.62, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-20deg)', filter: 'blur(1px)' }} />
+      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '1200px', right: '-300px', width: '1050px', opacity: 0.62, pointerEvents: 'none', zIndex: 0, transform: 'rotate(80deg)', filter: 'blur(1px)' }} />
+      <img src="/photo_yeda/brushes/brush-lemon.png" alt="" style={{ position: 'absolute', top: '1600px', left: '-200px', width: '1000px', opacity: 0.62, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-40deg)', filter: 'blur(1px)' }} />
 
       <div style={{ position: 'relative', zIndex: 2, maxWidth: '780px', margin: '0 auto', padding: '0 24px' }}>
 

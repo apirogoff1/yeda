@@ -1,0 +1,194 @@
+import React from "react"
+
+interface Dish {
+  name: string
+  composition: string
+  kcal: number
+  price: number
+}
+
+interface MenuSectionProps {
+  id: string
+  title: string
+  emoji: string
+  photo: string
+  dishes: Dish[]
+  grad: string
+  shadow: string
+  accentColor: string
+}
+
+export default function MenuSection({ id, title, emoji, photo, dishes, grad, shadow, accentColor }: MenuSectionProps) {
+  return (
+    <div style={{ marginBottom: "48px" }}>
+      <div style={{
+        padding: "0 40px 20px 40px",
+        fontFamily: "var(--font-comfortaa)",
+        fontSize: "56px",
+        fontWeight: 900,
+        color: "#1a1a1a",
+        letterSpacing: "-2px",
+        lineHeight: 1,
+        textShadow: "0 4px 24px rgba(0,0,0,0.10)",
+      }}>
+        {title}
+      </div>
+
+      <section id={id} style={{
+        display: "flex",
+        alignItems: "stretch",
+        minHeight: "320px",
+        background: "linear-gradient(135deg, rgba(200,210,230,0.15) 0%, rgba(255,255,255,0.95) 60%, rgba(200,210,230,0.10) 100%)",
+        borderRadius: "32px",
+        boxShadow: "0 8px 48px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+        border: "1.5px solid rgba(255,255,255,0.9)",
+        overflow: "hidden",
+        position: "relative",
+        margin: "0 40px",
+      }}>
+
+        <div style={{
+          width: "360px",
+          minWidth: "360px",
+          position: "relative",
+          background: "linear-gradient(135deg, rgba(15,20,40,0.75) 0%, rgba(30,40,60,0.55) 50%, rgba(15,20,40,0.65) 100%)",
+          backdropFilter: "blur(8px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          borderRight: "1px solid rgba(255,255,255,0.1)",
+        }}>
+          <img
+            src={photo}
+            alt={title}
+            style={{
+              width: "280px",
+              height: "280px",
+              objectFit: "contain",
+              filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.5))",
+              transition: "transform 0.3s ease",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"
+            }}
+          />
+        </div>
+
+        <div style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          padding: "32px",
+          gap: "20px",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}>
+          {dishes.map((dish, i) => (
+            <DishCard key={i} dish={dish} grad={grad} shadow={shadow} accentColor={accentColor} />
+          ))}
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function DishCard({ dish, grad, shadow, accentColor }: { dish: Dish; grad: string; shadow: string; accentColor: string }) {
+  const [hovered, setHovered] = React.useState(false)
+  const [btnHovered, setBtnHovered] = React.useState(false)
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        flex: 1,
+        minWidth: "240px",
+        background: "#fff",
+        borderRadius: "20px",
+        padding: "24px",
+        boxShadow: hovered
+          ? "0 20px 48px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08)"
+          : "0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)",
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        transition: "all 0.25s ease",
+        border: hovered ? "1.5px solid rgba(0,0,0,0.10)" : "1.5px solid rgba(0,0,0,0.06)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        cursor: "default",
+        alignSelf: "stretch",
+      }}
+    >
+      <div style={{
+        display: "inline-flex",
+        alignItems: "center",
+        background: accentColor + "18",
+        borderRadius: "100px",
+        padding: "4px 12px",
+        width: "fit-content",
+      }}>
+        <span style={{ fontSize: "13px", color: accentColor, fontWeight: 700, fontFamily: "var(--font-comfortaa)" }}>
+          {dish.kcal} ккал
+        </span>
+      </div>
+
+      <div style={{
+        fontFamily: "var(--font-comfortaa)",
+        fontSize: "24px",
+        fontWeight: 900,
+        color: "#1a1a1a",
+        lineHeight: 1.2,
+      }}>
+        {dish.name}
+      </div>
+
+      <div style={{
+        fontSize: "16px",
+        color: "#444",
+        lineHeight: 1.5,
+        fontFamily: "var(--font-comfortaa)",
+        fontWeight: 600,
+        flex: 1,
+      }}>
+        {dish.composition}
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "8px" }}>
+        <div style={{
+          fontFamily: "var(--font-comfortaa)",
+          fontSize: "28px",
+          fontWeight: 900,
+          background: grad,
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}>
+          {dish.price}₽
+        </div>
+        <button
+          onMouseEnter={() => setBtnHovered(true)}
+          onMouseLeave={() => setBtnHovered(false)}
+          style={{
+            background: btnHovered ? grad : "#fff",
+            border: "2px solid " + accentColor,
+            borderRadius: "100px",
+            padding: "10px 20px",
+            cursor: "pointer",
+            fontFamily: "var(--font-comfortaa)",
+            fontSize: "14px",
+            fontWeight: 700,
+            color: btnHovered ? "#fff" : accentColor,
+            boxShadow: btnHovered ? shadow : "none",
+            transition: "all 0.2s ease",
+            whiteSpace: "nowrap",
+          }}
+        >
+          В корзину
+        </button>
+      </div>
+    </div>
+  )
+}

@@ -1,4 +1,5 @@
 'use client'
+import ReactMarkdown from 'react-markdown'
 import { useState } from 'react'
 type Message = { role: string; content: string }
 export function AiChat() {
@@ -39,7 +40,7 @@ export function AiChat() {
         {messages.map((m, i) => (
           <div key={i} className={m.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
             <div className={m.role === 'user' ? 'max-w-[80%] rounded-xl px-4 py-2 text-sm bg-blue-600 text-white' : 'max-w-[80%] rounded-xl px-4 py-2 text-sm bg-gray-800 text-gray-100'}>
-              {m.content}
+              {m.role === 'assistant' ? <ReactMarkdown>{m.content}</ReactMarkdown> : m.content}
             </div>
           </div>
         ))}

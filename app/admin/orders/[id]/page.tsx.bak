@@ -1,0 +1,100 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/store'
+
+type OrderItem = { id: string; name: string; price: number; quantity: number }
+type Order = { id: string; name: string; phone: string; address: string; total: number; status: string; createdAt: string; items: OrderItem[] }
+
+const statusLabel: Record<string, string> = {
+  new: 'Новый',
+  cooking: 'Готовится',
+  delivery: 'Доставляется',
+  done: 'Выполнен',
+}
+const statusColor: Record<string, { bg: string; color: string }> = {
+  new: { bg: '#FFF0EB', color: '#FF4D00' },
+  cooking: { bg: '#FFF8E1', color: '#F59E0B' },
+  delivery: { bg: '#E8F4FF', color: '#4A90D9' },
+  done: { bg: '#EFFFEF', color: '#2ecc71' },
+}
+
+export default function OrderPage({ params }: { params: { id: string } }) {
+  const [order, setOrder] = useState<Order | null>(null)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
+  const user = useAuthStore(state => state.user)
+
+  useEffect(() => {
+    if (user === null) return
+    if (user.role !== 'ADMIN') router.push('/login')
+  }, [user, router])
+
+  useEffect(() => {
+    fetch('/api/admin')
+      .then(r => r.json())
+      .then(data => {
+        const found = (data.orders || []).find((o: Order) => o.id === params.id)
+        setOrder(found || null)
+        setLoading(false)
+      })
+  }, [params.id])
+
+  const fmt = (n: number) => new Intl.NumberFormat('ru-RU').format(n)
+  const fmtDate = (s: string) => new Date(s).toLocaleString('ru-RU')
+
+  if (loading) return <main style={{ minHeight: '100vh', paddingTop: '120px', background: '#F4F4F4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><p style={{ fontFamily: 'var(--font-geologica)', color: '#999' }}>Loading...</p></main>
+  if (!order) return <main style={{ minHeight: '100vh', paddingTop: '120px', background: '#F4F4F4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><p style={{ fontFamily: 'var(--font-geologica)', color: '#999' }}>Заказ не найден</p></main>
+
+  const sc = statusColor[order.status] ?? statusColor.new
+
+  return (
+    <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', background: '#F4F4F4' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 24px' }}>
+        <button onClick={() => router.back()} style={{ marginBottom: '24px', padding: '10px 24px', borderRadius: '12px', border: 'none', cursor: 'pointer', background: '#fff', fontFamily: 'var(--font-geologica)', fontSize: '14px', fontWeight: 600, color: '#433932', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+          \u2190 Назад
+        </button>
+        <div style={{ background: '#fff', borderRadius: '24px', padding: '40px', boxShadow: '0 6px 32px rgba(0,0,0,0.13)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '32px' }}>
+            <div>
+              <h1 style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '32px', fontWeight: 900, color: '#433932', margin: 0 }}>{order.name}</h1>
+              <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '15px', color: '#999', margin: '8px 0 0' }}>{order.phone}</p>
+            </div>
+            <div style={{ padding: '8px 20px', borderRadius: '20px', background: sc.bg, color: sc.color, fontFamily: 'var(--font-geologica)', fontSize: '15px', fontWeight: 700 }}>
+              {statusLabel[order.status] ?? order.status}
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '32px' }}>
+            {[
+              { label: 'Адрес', value: order.address },
+              { label: 'Дата', value: fmtDate(order.createdAt) },
+              { label: 'Сумма', value: fmt(order.total) + ' руб.' },
+              { label: 'ID', value: order.id },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ background: '#FFF8EF', borderRadius: '16px', padding: '20px 24px' }}>
+                <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '12px', color: '#bbb', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>{label}</div>
+                <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '16px', color: '#433932', fontWeight: 600, wordBreak: 'break-all' }}>{value}</div>
+              </div>
+            ))}
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-geologica)', fontSize: '16px', fontWeight: 700, color: '#433932', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '16px' }}>Состав заказа</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {order.items.map(item => (
+              <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', background: '#FFF8EF', borderRadius: '14px', border: '1px solid #FFD4C2' }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '15px', fontWeight: 600, color: '#433932' }}>{item.name}</div>
+                  <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '13px', color: '#999', marginTop: '2px' }}>x{item.quantity}</div>
+                </div>
+                <div style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '18px', fontWeight: 900, color: '#FF4D00' }}>{fmt(item.price * item.quantity)} руб.</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '2px solid #FFD4C2', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontFamily: 'var(--font-geologica)', fontSize: '16px', fontWeight: 700, color: '#433932' }}>Итого</span>
+            <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '28px', fontWeight: 900, color: '#FF4D00' }}>{fmt(order.total)} руб.</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}

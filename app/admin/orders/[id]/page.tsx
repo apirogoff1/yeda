@@ -19,7 +19,9 @@ const statusColor: Record<string, { bg: string; color: string }> = {
   done: { bg: '#EFFFEF', color: '#2ecc71' },
 }
 
+// @ts-ignore
 export default function OrderPage({ params }: { params: { id: string } }) {
+  const id = params.id
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -34,11 +36,11 @@ export default function OrderPage({ params }: { params: { id: string } }) {
     fetch('/api/admin')
       .then(r => r.json())
       .then(data => {
-        const found = (data.orders || []).find((o: Order) => o.id === params.id)
+        const found = (data.orders || []).find((o: Order) => o.id === id)
         setOrder(found || null)
         setLoading(false)
       })
-  }, [params.id])
+  }, [id])
 
   const fmt = (n: number) => new Intl.NumberFormat('ru-RU').format(n)
   const fmtDate = (s: string) => new Date(s).toLocaleString('ru-RU')

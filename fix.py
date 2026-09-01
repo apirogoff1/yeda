@@ -1,17 +1,16 @@
-﻿with open(r'C:\Users\raund\Desktop\portfolio\yeda\app\payment-success\page.tsx', 'r', encoding='utf-8') as f:
-    content = f.read()
+﻿t = ': { src: string; top: number; left: number; w: number; rotate: number }[]'
 
-content = content.replace(
-    'const pageDekor_veggies = [',
-    'const pageDekor_veggies: never[] = ['
-)
+files = [
+    r'C:\Users\raund\Desktop\portfolio\yeda\app\menu\page.tsx',
+    r'C:\Users\raund\Desktop\portfolio\yeda\app\dashboard\page.tsx',
+]
 
-content = content.replace(
-    'const pageDekor_brushes = [',
-    'const pageDekor_brushes: never[] = ['
-)
-
-with open(r'C:\Users\raund\Desktop\portfolio\yeda\app\payment-success\page.tsx', 'w', encoding='utf-8') as f:
-    f.write(content)
-
-print('Done')
+for path in files:
+    with open(path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    content = content.replace('const pageDekor_brushes = [', f'const pageDekor_brushes{t} = [')
+    content = content.replace('const pageDekor_drops = [', f'const pageDekor_drops{t} = [')
+    content = content.replace('const pageDekor_veggies = [', f'const pageDekor_veggies{t} = [')
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f'Done: {path}')

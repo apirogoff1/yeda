@@ -109,7 +109,7 @@ export default function DashboardPage() {
     ? user.name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2)
     : '?'
 
-  const pageDekor_brushes = [
+  const pageDekor_brushes: { src: string; top: number; left: number; w: number; rotate: number }[] = [
     { src: '/photo_yeda/brushes/brush-carrot.png', top: 1328, left: -237, w: 900, rotate: 170 },
     { src: '/photo_yeda/brushes/brush-ezhevika.png', top: 420, left: -135, w: 900, rotate: -20 },
     { src: '/photo_yeda/brushes/brush-lemon.png', top: -190, left: 806, w: 900, rotate: 15 },

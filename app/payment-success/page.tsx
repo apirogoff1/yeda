@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import FloatingShapes from '@/components/home/FloatingShapes'
 
-const pageDekor_brushes: never[] = [
+const pageDekor_brushes: { src: string; top: number; left: number; w: number; rotate: number }[] = [
   { src: '/photo_yeda/brushes/brush-lemon.png', top: 352, left: 188, w: 1000, rotate: 15 },
   { src: '/photo_yeda/brushes/brush-strawberry.png', top: 47, left: -192, w: 1000, rotate: -25 },
   { src: '/photo_yeda/brushes/brush-skyblue.png', top: 233, left: 847, w: 900, rotate: 40 },
 ]
-const pageDekor_drops: never[] = [
+const pageDekor_drops: { src: string; top: number; left: number; w: number; rotate: number }[] = [
 
 ]
-const pageDekor_veggies: never[] = [
+const pageDekor_veggies: { src: string; top: number; left: number; w: number; rotate: number }[] = [
 
 ]
 

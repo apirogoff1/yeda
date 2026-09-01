@@ -4,7 +4,7 @@ import FloatingShapesMenu from "@/components/home/FloatingShapesMenu"
 import MenuSection from "./MenuSection"
 import MenuSectionNoPhoto from "./MenuSectionNoPhoto"
 
-const pageDekor_brushes = [
+const pageDekor_brushes: { src: string; top: number; left: number; w: number; rotate: number }[] = [
   { src: '/photo_yeda/brushes/brush-blue.png', top: -133, left: -244, w: 800, rotate: -20 },
   { src: '/photo_yeda/brushes/brush-lemon.png', top: 771, left: 1001, w: 750, rotate: 90 },
   { src: '/photo_yeda/brushes/brush-zucchini.png', top: 1178, left: 326, w: 780, rotate: 150 },
@@ -69,7 +69,7 @@ const pageDekor_brushes = [
   { src: '/photo_yeda/brushes/brush-carrot.png', top: 25699, left: 321, w: 760, rotate: 50 },
 ]
 
-const pageDekor_veggies = [
+const pageDekor_veggies: { src: string; top: number; left: number; w: number; rotate: number }[] = [
   { src: '/photo_yeda/vegetables/strawberry.png', top: 492, left: 136, w: 180, rotate: 12 },
   { src: '/photo_yeda/vegetables/tomato.png', top: 232, left: 1206, w: 160, rotate: -8 },
   { src: '/photo_yeda/vegetables/broccoli.png', top: -11, left: 285, w: 170, rotate: 6 },
@@ -83,7 +83,7 @@ const pageDekor_veggies = [
   { src: '/photo_yeda/vegetables/zucchini_1.png', top: 3100, left: 150, w: 160, rotate: -20 },
 ]
 
-const pageDekor_drops = [
+const pageDekor_drops: { src: string; top: number; left: number; w: number; rotate: number }[] = [
   { src: '/photo_yeda/brushes/drop-blue.png', top: 5420, left: 428, w: 630, rotate: 15 },
   { src: '/photo_yeda/brushes/drop-green.png', top: 4484, left: 582, w: 560, rotate: -20 },
   { src: '/photo_yeda/brushes/drop-orange.png', top: 11850, left: 542, w: 600, rotate: 30 },

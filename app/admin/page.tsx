@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuthStore } from '@/store'
 
@@ -9,7 +9,7 @@ type Subscription = { id: string; email: string; plan: string; createdAt: string
 type User = { id: string; name: string; email: string; role: string; createdAt: string }
 type Stats = { totalOrders: number; totalRevenue: number; newOrders: number; totalSubscriptions: number; totalUsers: number }
 
-export default function AdminPage() {
+function AdminPageInner() {
   const searchParams = useSearchParams()
   const [tab, setTab] = useState<'stats' | 'orders' | 'subscriptions' | 'users'>((searchParams.get('tab') as any) || 'stats')
   const [stats, setStats] = useState<Stats | null>(null)
@@ -314,5 +314,13 @@ export default function AdminPage() {
 
       </div>
     </main>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminPageInner />
+    </Suspense>
   )
 }

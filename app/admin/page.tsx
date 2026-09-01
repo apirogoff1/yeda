@@ -27,7 +27,7 @@ export default function AdminPage() {
   const user = useAuthStore(state => state.user)
 
   useEffect(() => {
-    if (!user || user.role !== 'ADMIN') {
+    if (!user || (user.role as string) !== 'ADMIN') {
       router.push('/login')
     }
   }, [user, router])

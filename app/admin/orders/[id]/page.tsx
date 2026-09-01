@@ -19,9 +19,8 @@ const statusColor: Record<string, { bg: string; color: string }> = {
   done: { bg: '#EFFFEF', color: '#2ecc71' },
 }
 
-// @ts-ignore
-export default function OrderPage({ params }: { params: { id: string } }) {
-  const id = params.id
+export default function OrderPage({ params }: { params: Promise<{ id: string }> & { id: string } }) {
+  const id = (params as any).id
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()

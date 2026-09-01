@@ -138,7 +138,7 @@ export default function SubscriptionPage() {
   ]
 
   return (
-    <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden', minHeight: 'auto' }}>
+    <main style={{ minHeight: 'auto', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden' }}>
       <FloatingShapes />
       <img src="/photo_yeda/brushes/brush-ezhevika.png" alt="" style={{ position: 'absolute', top: '0px', left: '-150px', width: '1100px', opacity: 0.4, pointerEvents: 'none', zIndex: 0, transform: 'rotate(12deg)', filter: 'blur(1px)', maxWidth: 'none' }} />
       <img src="/photo_yeda/brushes/brush-ezhevika.png" alt="" style={{ position: 'absolute', top: '380px', right: '-350px', width: '1000px', opacity: 0.4, pointerEvents: 'none', zIndex: 0, transform: 'rotate(-145deg)', filter: 'blur(1px)', maxWidth: 'none' }} />

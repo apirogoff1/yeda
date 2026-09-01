@@ -8,7 +8,7 @@ const pageDekor_brushes = [
   { src: '/photo_yeda/brushes/brush-strawberry.png', top: 47, left: -192, w: 1000, rotate: -25 },
   { src: '/photo_yeda/brushes/brush-skyblue.png', top: 233, left: 847, w: 900, rotate: 40 },
 ]
-const pageDekor_drops = [
+const pageDekor_drops: never[] = [
 
 ]
 const pageDekor_veggies = [

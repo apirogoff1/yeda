@@ -56,22 +56,22 @@ export async function POST(req: NextRequest) {
       await transporter.sendMail({
         from: `YEDA <${process.env.GMAIL_USER}>`,
         to: 'apirogoff1@gmail.com',
-        subject: `New order YEDA - ${total} RUB`,
+        subject: `Новый заказ YEDA — ${total} руб.`,
         html: `
-          <h2 style="color:#FF4D00">New order!</h2>
-          <p><b>Name:</b> ${name || 'Not specified'}</p>
-          <p><b>Phone:</b> ${phone || 'Not specified'}</p>
-          <p><b>Address:</b> ${address || 'Not specified'}</p>
-          <h3>Order items:</h3>
+          <h2 style="color:#FF4D00">Новый заказ!</h2>
+          <p><b>Имя:</b> ${name || 'не указано'}</p>
+          <p><b>Телефон:</b> ${phone || 'не указан'}</p>
+          <p><b>Адрес:</b> ${address || 'не указан'}</p>
+          <h3>Состав заказа:</h3>
           <table style="border-collapse:collapse;width:100%">
             <tr style="background:#FF4D00;color:#fff">
-              <th style="padding:8px;text-align:left">Dish</th>
-              <th style="padding:8px;text-align:left">Qty</th>
-              <th style="padding:8px;text-align:left">Sum</th>
+              <th style="padding:8px;text-align:left">Блюдо</th>
+              <th style="padding:8px;text-align:left">Кол-во</th>
+              <th style="padding:8px;text-align:left">Сумма</th>
             </tr>
             ${itemsHtml}
           </table>
-          <h3>Total: ${total} RUB</h3>
+          <h3>Итого: ${total} руб.</h3>
         `,
       })
     } catch (emailError) {

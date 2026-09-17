@@ -168,7 +168,7 @@ export default function MenuPage() {
               { id: "ZAKUSKI", label: "ЗАКУСКИ", grad: "linear-gradient(135deg, #7F1D1D 0%, #B91C1C 45%, #EF4444 100%)", shadow: "0 4px 20px rgba(127,29,29,0.5)" },
             ].map((cat) => (
               <a key={cat.id} href={`#${cat.id}`}
-                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => el.offsetHeight > 0); if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
+                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => (el as HTMLElement).offsetHeight > 0) as HTMLElement | undefined; if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   textDecoration: "none", background: cat.grad, boxShadow: cat.shadow,
@@ -196,7 +196,7 @@ export default function MenuPage() {
               { id: "CHAY", label: "ЧАЙ", grad: "linear-gradient(135deg, #1A2E05 0%, #3F6212 45%, #84CC16 100%)", shadow: "0 4px 20px rgba(26,46,5,0.5)" },
             ].map((cat) => (
               <a key={cat.id} href={`#${cat.id}`}
-                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => el.offsetHeight > 0); if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
+                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => (el as HTMLElement).offsetHeight > 0) as HTMLElement | undefined; if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   textDecoration: "none", background: cat.grad, boxShadow: cat.shadow,

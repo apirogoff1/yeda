@@ -93,16 +93,44 @@ const pageDekor_drops: { src: string; top: number; left: number; w: number; rota
 export default function MenuPage() {
   return (
     <main style={{ background: "#F5EAD8", paddingTop: "100px", overflow: "clip", position: "relative" }}>
-      {pageDekor_brushes.map((b, i) => (
-        <img key={i} src={b.src} alt="" style={{ position: "absolute", top: b.top, left: b.left, width: b.w, opacity: 0.6, filter: "blur(1px)", transform: `rotate(${b.rotate}deg)`, pointerEvents: "none" }} />
-      ))}
-      {pageDekor_veggies.map((v, i) => (
-        <img key={i} src={v.src} alt="" style={{ position: "absolute", top: v.top, left: v.left, width: v.w, transform: `rotate(${v.rotate}deg)`, pointerEvents: "none" }} />
-      ))}
-      {pageDekor_drops.map((d, i) => (
-        <img key={i} src={d.src} alt="" style={{ position: "absolute", top: d.top, left: d.left, width: d.w, transform: `rotate(${d.rotate}deg)`, pointerEvents: "none" }} />
-      ))}
       <FloatingShapesMenu />
+      {/* DESKTOP brushes/veggies/drops */}
+      <div className="hidden-mobile">
+        {pageDekor_brushes.map((b, i) => (
+          <img key={i} src={b.src} alt="" style={{ position: "absolute", top: b.top, left: b.left, width: b.w, opacity: 0.6, filter: "blur(1px)", transform: `rotate(${b.rotate}deg)`, pointerEvents: "none" }} />
+        ))}
+        {pageDekor_veggies.map((v, i) => (
+          <img key={i} src={v.src} alt="" style={{ position: "absolute", top: v.top, left: v.left, width: v.w, transform: `rotate(${v.rotate}deg)`, pointerEvents: "none" }} />
+        ))}
+        {pageDekor_drops.map((d, i) => (
+          <img key={i} src={d.src} alt="" style={{ position: "absolute", top: d.top, left: d.left, width: d.w, transform: `rotate(${d.rotate}deg)`, pointerEvents: "none" }} />
+        ))}
+      </div>
+      {/* MOBILE brushes */}
+      <div className="show-mobile" style={{ flexDirection: "column" }}>
+        {[
+          { src: "/photo_yeda/brushes/brush-blue.png", top: 0, left: -40, w: 280, rotate: -20 },
+          { src: "/photo_yeda/brushes/brush-carrot.png", top: 200, left: 180, w: 260, rotate: 30 },
+          { src: "/photo_yeda/brushes/brush-strawberry.png", top: 500, left: -30, w: 270, rotate: -15 },
+          { src: "/photo_yeda/brushes/brush-lemon.png", top: 800, left: 190, w: 260, rotate: 20 },
+          { src: "/photo_yeda/brushes/brush-zucchini.png", top: 1100, left: -20, w: 280, rotate: -30 },
+          { src: "/photo_yeda/brushes/brush-raspberry.png", top: 1400, left: 180, w: 260, rotate: 15 },
+          { src: "/photo_yeda/brushes/brush-skyblue.png", top: 1700, left: -30, w: 270, rotate: -10 },
+          { src: "/photo_yeda/brushes/brush-ezhevika.png", top: 2000, left: 190, w: 260, rotate: 25 },
+          { src: "/photo_yeda/brushes/brush-blue.png", top: 2300, left: -20, w: 280, rotate: -20 },
+          { src: "/photo_yeda/brushes/brush-lemon.png", top: 2600, left: 180, w: 260, rotate: 10 },
+          { src: "/photo_yeda/brushes/brush-carrot.png", top: 2900, left: -30, w: 270, rotate: -25 },
+          { src: "/photo_yeda/brushes/brush-strawberry.png", top: 3200, left: 190, w: 260, rotate: 20 },
+          { src: "/photo_yeda/brushes/brush-raspberry.png", top: 3500, left: -20, w: 280, rotate: -15 },
+          { src: "/photo_yeda/brushes/brush-zucchini.png", top: 3800, left: 180, w: 260, rotate: 30 },
+          { src: "/photo_yeda/brushes/brush-skyblue.png", top: 4100, left: -30, w: 270, rotate: -20 },
+          { src: "/photo_yeda/brushes/brush-ezhevika.png", top: 4400, left: 190, w: 260, rotate: 15 },
+          { src: "/photo_yeda/brushes/brush-blue.png", top: 4700, left: -20, w: 280, rotate: -10 },
+          { src: "/photo_yeda/brushes/brush-lemon.png", top: 5000, left: 180, w: 260, rotate: 25 },
+        ].map((b, i) => (
+          <img key={i} src={b.src} alt="" style={{ position: "absolute", top: b.top, left: b.left, width: b.w, opacity: 0.55, transform: `rotate(${b.rotate}deg)`, pointerEvents: "none" }} />
+        ))}
+      </div>
       {/* HERO */}
       <section style={{ position: "relative", minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 20px 40px" }}>
         <img src="/photo_yeda/photo_menu/menu.png" alt="MENU" style={{ width: "clamp(300px, 50vw, 700px)", overflow: "hidden", position: "relative", zIndex: 2, pointerEvents: "none" }} />
@@ -125,10 +153,10 @@ export default function MenuPage() {
 
 
       {/* CATEGORIES NAV */}
-      <nav style={{ overflow: "hidden", position: "relative", zIndex: 10, padding: "0 40px 80px" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0px" }}>
+      <nav className="menu-categories-nav" style={{ position: "relative", zIndex: 10, padding: "0 40px 80px" }}>
+        <div className="menu-cat-wrapper" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0px" }}>
           {/* Ряд 1 - 8 кнопок */}
-          <div style={{ display: "flex", gap: "16px", marginBottom: "24px" }}>
+          <div className="menu-cat-row" style={{ display: "flex", gap: "16px", marginBottom: "24px" }}>
             {[
               { id: "VSE", label: "ВСЁ", grad: "linear-gradient(135deg, #B91C1C 0%, #DC2626 40%, #F97316 100%)", shadow: "0 4px 20px rgba(185,28,28,0.5)" },
               { id: "BURGERY", label: "БУРГЕРЫ", grad: "linear-gradient(135deg, #9D174D 0%, #BE185D 45%, #F43F5E 100%)", shadow: "0 4px 20px rgba(157,23,77,0.5)" },
@@ -140,6 +168,7 @@ export default function MenuPage() {
               { id: "ZAKUSKI", label: "ЗАКУСКИ", grad: "linear-gradient(135deg, #7F1D1D 0%, #B91C1C 45%, #EF4444 100%)", shadow: "0 4px 20px rgba(127,29,29,0.5)" },
             ].map((cat) => (
               <a key={cat.id} href={`#${cat.id}`}
+                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => el.offsetHeight > 0); if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   textDecoration: "none", background: cat.grad, boxShadow: cat.shadow,
@@ -156,7 +185,7 @@ export default function MenuPage() {
             ))}
           </div>
           {/* Ряд 2 - 7 кнопок со сдвигом */}
-          <div style={{ display: "flex", gap: "16px", marginLeft: "90px" }}>
+          <div className="menu-cat-row" style={{ display: "flex", gap: "16px", marginLeft: "90px" }}>
             {[
               { id: "KHINKALI", label: "ХИНКАЛИ", grad: "linear-gradient(135deg, #4C1D95 0%, #6D28D9 45%, #A78BFA 100%)", shadow: "0 4px 20px rgba(76,29,149,0.5)" },
               { id: "STEYKI", label: "СТЕЙКИ", grad: "linear-gradient(135deg, #881337 0%, #BE123C 45%, #FB7185 100%)", shadow: "0 4px 20px rgba(136,19,55,0.5)" },
@@ -167,6 +196,7 @@ export default function MenuPage() {
               { id: "CHAY", label: "ЧАЙ", grad: "linear-gradient(135deg, #1A2E05 0%, #3F6212 45%, #84CC16 100%)", shadow: "0 4px 20px rgba(26,46,5,0.5)" },
             ].map((cat) => (
               <a key={cat.id} href={`#${cat.id}`}
+                onClick={e => { const el = Array.from(document.querySelectorAll(`#${cat.id}`)).find(el => el.offsetHeight > 0); if(el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
                 style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   textDecoration: "none", background: cat.grad, boxShadow: cat.shadow,
@@ -183,6 +213,7 @@ export default function MenuPage() {
             ))}
           </div>
         </div>
+        <div className="scroll-hint">›</div>
       </nav>
 
       {/* BURGERY */}

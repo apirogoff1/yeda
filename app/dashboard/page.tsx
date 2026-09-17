@@ -85,24 +85,20 @@ export default function DashboardPage() {
   const font2 = 'var(--font-geologica)'
   const accent = '#1A6FD4'
   const dark = '#433932'
-  const card = {
-    background: 'rgba(255,255,255,0.65)',
-    borderRadius: '32px',
-    padding: '40px',
-    backdropFilter: 'blur(8px)',
-    marginBottom: '32px',
-  }
-  const tabBtn = (tab: string) => ({
+  const card: React.CSSProperties = { background: 'rgba(255,255,255,0.65)', borderRadius: '32px', padding: '40px', backdropFilter: 'blur(8px)', marginBottom: '32px' }
+  const tabBtn = (tab: string): React.CSSProperties => ({
     fontFamily: font1,
     fontWeight: 700,
-    fontSize: '15px',
-    padding: '10px 24px',
+    fontSize: '14px',
+    padding: '8px 20px',
     borderRadius: '50px',
     border: 'none',
     cursor: 'pointer',
     background: activeTab === tab ? accent : 'rgba(255,255,255,0.5)',
     color: activeTab === tab ? '#fff' : dark,
     transition: 'all 0.2s',
+    whiteSpace: 'nowrap' as const,
+    flexShrink: 0,
   })
 
   const initials = user?.name
@@ -123,36 +119,44 @@ export default function DashboardPage() {
     <main style={{ minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px', position: 'relative', overflow: 'hidden' }}>
       <FloatingShapes />
       {pageDekor_brushes.map((b, i) => (
-        <img key={i} src={b.src} alt="" style={{ position: 'absolute', top: b.top, left: b.left, width: b.w, opacity: 0.4, pointerEvents: 'none', zIndex: 0, transform: `rotate(${b.rotate}deg)`, filter: 'blur(1.5px)' }} />
+        <img key={i} src={b.src} alt="" style={{ position: 'absolute', top: b.top, left: b.left, width: b.w, opacity: 0.4, pointerEvents: 'none', zIndex: 0, transform: `rotate(${b.rotate}deg)`, filter: 'blur(1.5px)', maxWidth: 'none' }} />
       ))}
-      <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px', position: 'relative', overflow: 'hidden', zIndex: 1, boxSizing: 'border-box' as const }}>
+
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <h1 style={{ fontFamily: font1, fontSize: '52px', fontWeight: 900, color: accent, marginBottom: '8px' }}>Личный кабинет</h1>
+          <h1 className="dash-h1" style={{ fontFamily: font1, fontSize: '52px', fontWeight: 900, color: accent, marginBottom: '8px' }}>Личный кабинет</h1>
           <p style={{ fontFamily: font2, fontSize: '18px', color: dark }}>Управляйте своим аккаунтом и заказами</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '32px', alignItems: 'start' }}>
-          <div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'start' }}>
+
+          <div style={{ flex: '0 0 280px', maxWidth: '280px', minWidth: 0, boxSizing: 'border-box' as const }}>
             <div style={{ ...card, textAlign: 'center' }}>
               <div style={{ width: '96px', height: '96px', borderRadius: '50%', background: `linear-gradient(135deg, ${accent}, #ff8c42)`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', boxShadow: '0 8px 32px rgba(255,77,0,0.3)', fontSize: '36px', fontWeight: 900, color: '#fff', fontFamily: font1 }}>
                 {initials}
               </div>
               <p style={{ fontFamily: font1, fontSize: '22px', fontWeight: 800, color: dark, marginBottom: '6px' }}>{user?.name || 'Гость'}</p>
-              <p style={{ fontFamily: font2, fontSize: '14px', color: '#888', marginBottom: '4px' }}>{user?.email || ''}</p>
-              <p style={{ fontFamily: font2, fontSize: '14px', color: '#888', marginBottom: '8px' }}>{profile?.phone || ''}</p>
+              <p style={{ fontFamily: font2, fontSize: '14px', color: '#555', fontWeight: 700, marginBottom: '4px' }}>{user?.email || ''}</p>
+              <p style={{ fontFamily: font2, fontSize: '14px', color: '#555', fontWeight: 700, marginBottom: '8px' }}>{profile?.phone || ''}</p>
               <span style={{ display: 'inline-block', background: 'rgba(26,111,212,0.1)', color: accent, fontFamily: font2, fontSize: '12px', padding: '4px 14px', borderRadius: '50px', marginBottom: '28px' }}>{user?.role || 'user'}</span>
-              <button onClick={handleLogout} style={{ width: '100%', padding: '14px', borderRadius: '50px', border: `2px solid ${accent}`, background: 'transparent', color: accent, fontFamily: font1, fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}
+              <button onClick={handleLogout} style={{ width: 'auto', padding: '10px 32px', borderRadius: '50px', border: `2px solid ${accent}`, background: 'transparent', color: accent, fontFamily: font1, fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}
                 onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = accent; (e.target as HTMLButtonElement).style.color = '#fff' }}
                 onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = 'transparent'; (e.target as HTMLButtonElement).style.color = accent }}
               >Выйти</button>
             </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <button style={tabBtn('orders')} onClick={() => setActiveTab('orders')}>Заказы</button>
-              <button style={tabBtn('addresses')} onClick={() => setActiveTab('addresses')}>Адреса</button>
-              <button style={tabBtn('favorites')} onClick={() => setActiveTab('favorites')}>Избранное</button>
-              <button style={tabBtn('profile')} onClick={() => setActiveTab('profile')}>Профиль</button>
+              {(['orders', 'addresses', 'favorites', 'profile'] as const).map(tab => (
+                <button key={tab} style={tabBtn(tab)} onClick={() => setActiveTab(tab)}>
+                  {tab === 'orders' ? 'Заказы' : tab === 'addresses' ? 'Адреса' : tab === 'favorites' ? 'Избранное' : 'Профиль'}
+                </button>
+              ))}
             </div>
           </div>
-          <div>
+
+          <div style={{ flex: '1 1 300px', minWidth: 0, boxSizing: 'border-box' as const, overflow: 'hidden' }}>
+
             {activeTab === 'orders' && (
               <div style={card}>
                 <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>История заказов</h2>
@@ -164,13 +168,13 @@ export default function DashboardPage() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {orders.map((order: any) => (
-                      <div key={order.id} style={{ background: 'rgba(255,77,0,0.04)', borderRadius: '20px', padding: '20px 24px', border: '1.5px solid rgba(255,77,0,0.1)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <div key={order.id} style={{ background: 'rgba(255,77,0,0.04)', borderRadius: '20px', padding: '20px', border: '1.5px solid rgba(255,77,0,0.1)', boxSizing: 'border-box' as const }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '8px', flexWrap: 'wrap' }}>
                           <div>
                             <p style={{ fontFamily: font1, fontWeight: 800, fontSize: '16px', color: dark, marginBottom: '2px' }}>Заказ #{order.id.toString().slice(-6)}</p>
                             <p style={{ fontFamily: font2, fontSize: '13px', color: '#888' }}>{new Date(order.createdAt).toLocaleDateString('ru-RU')} {new Date(order.createdAt).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</p>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
                             <span style={{ fontFamily: font1, fontWeight: 900, fontSize: '18px', color: accent }}>{order.total}₽</span>
                             <span style={{ background: '#e8f5e9', color: '#2e7d32', fontFamily: font2, fontSize: '12px', fontWeight: 700, padding: '4px 12px', borderRadius: '20px' }}>{order.status}</span>
                           </div>
@@ -187,21 +191,26 @@ export default function DashboardPage() {
                 )}
               </div>
             )}
+
             {activeTab === 'addresses' && (
               <div style={card}>
                 <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>Адреса доставки</h2>
                 {addresses.map((addr) => (
-                  <div key={addr.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                    <div style={{ flex: 1, padding: '12px 20px', borderRadius: '50px', background: 'rgba(255,77,0,0.06)', fontFamily: font2, fontSize: '15px', color: dark }}>{addr.value}</div>
-                    <button onClick={() => handleRemoveAddress(addr.id)} style={{ background: 'none', border: '2px solid #FF4D00', color: '#FF4D00', borderRadius: '50px', padding: '8px 16px', cursor: 'pointer', fontFamily: font1, fontWeight: 700, fontSize: '13px' }}>Удалить</button>
+                  <div key={addr.id} style={{ marginBottom: '10px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <details style={{ width: '100%' }}>
+                      <summary style={{ padding: '12px 20px', borderRadius: '20px', background: 'rgba(255,77,0,0.06)', fontFamily: font2, fontSize: '15px', color: dark, boxSizing: 'border-box' as const, listStyle: 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const, cursor: 'pointer', display: 'block' }}>{addr.value}</summary>
+                      <div style={{ padding: '8px 20px 4px', fontFamily: font2, fontSize: '15px', color: dark, wordBreak: 'break-word' as const }}>{addr.value}</div>
+                    </details>
+                    <button onClick={() => handleRemoveAddress(addr.id)} style={{ alignSelf: 'flex-end', background: 'none', border: 'none', color: '#FF4D00', fontFamily: font1, fontWeight: 700, fontSize: '13px', cursor: 'pointer', padding: '0' }}>Удалить</button>
                   </div>
                 ))}
-                <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
-                  <input value={newAddress} onChange={e => setNewAddress(e.target.value)} placeholder='Новый адрес' style={{ flex: 1, padding: '14px 20px', borderRadius: '50px', border: '2px solid rgba(255,77,0,0.3)', fontFamily: font2, fontSize: '15px', outline: 'none', background: '#fff', boxSizing: 'border-box' as const }} onFocus={e => e.target.style.borderColor = accent} onBlur={e => e.target.style.borderColor = 'rgba(255,77,0,0.3)'} />
-                  <button onClick={handleAddAddress} style={{ background: accent, color: '#fff', fontFamily: font1, fontWeight: 700, fontSize: '15px', padding: '12px 24px', borderRadius: '50px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' as const }}>+ Добавить</button>
+                <div style={{ display: 'flex', gap: '12px', marginTop: '12px', flexWrap: 'wrap' }}>
+                  <input value={newAddress} onChange={e => setNewAddress(e.target.value)} placeholder='Новый адрес' style={{ flex: 1, minWidth: '160px', padding: '14px 20px', borderRadius: '50px', border: '2px solid rgba(255,77,0,0.3)', fontFamily: font2, fontSize: '15px', outline: 'none', background: '#fff', boxSizing: 'border-box' as const }} onFocus={e => e.target.style.borderColor = accent} onBlur={e => e.target.style.borderColor = 'rgba(255,77,0,0.3)'} />
+                  <button onClick={handleAddAddress} style={{ background: accent, color: '#fff', fontFamily: font1, fontWeight: 700, fontSize: '15px', padding: '12px 24px', borderRadius: '50px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' as const, flexShrink: 0 }}>+ Добавить</button>
                 </div>
               </div>
             )}
+
             {activeTab === 'favorites' && (
               <div style={card}>
                 <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>Избранное</h2>
@@ -213,18 +222,19 @@ export default function DashboardPage() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {favorites.map((fav: any) => (
-                      <div key={fav.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderRadius: '20px', background: 'rgba(255,77,0,0.04)', border: '1.5px solid rgba(255,77,0,0.1)' }}>
+                      <div key={fav.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderRadius: '20px', background: 'rgba(255,77,0,0.04)', border: '1.5px solid rgba(255,77,0,0.1)', boxSizing: 'border-box' as const }}>
                         <div>
                           <p style={{ fontFamily: font1, fontWeight: 700, fontSize: '16px', color: dark }}>{fav.dishName}</p>
-                          <p style={{ fontFamily: font2, fontSize: '14px', color: accent }}>{fav.price}₽</p>
+                          <p style={{ fontFamily: font2, fontSize: '14px', color: accent, fontWeight: 700 }}>{fav.price}₽</p>
                         </div>
-                        <button onClick={() => handleRemoveFavorite(fav.id)} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>❤️</button>
+                        <button onClick={() => handleRemoveFavorite(fav.id)} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>♥</button>
                       </div>
                     ))}
                   </div>
                 )}
               </div>
             )}
+
             {activeTab === 'profile' && (
               <div style={card}>
                 <h2 style={{ fontFamily: font1, fontSize: '24px', fontWeight: 900, color: dark, marginBottom: '20px' }}>Профиль</h2>
@@ -249,7 +259,7 @@ export default function DashboardPage() {
                       <p style={{ fontFamily: font1, fontWeight: 700, fontSize: '18px', color: dark }}>{profile?.phone || 'Не указан'}</p>
                     )}
                   </div>
-                  <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '8px' }}>
                     {editMode ? (
                       <>
                         <button onClick={handleSaveProfile} disabled={saving} style={{ padding: '12px 32px', borderRadius: '50px', border: 'none', background: accent, color: '#fff', fontFamily: font1, fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}>{saving ? 'Сохраняю...' : 'Сохранить'}</button>
@@ -262,6 +272,7 @@ export default function DashboardPage() {
                 </div>
               </div>
             )}
+
           </div>
         </div>
       </div>

@@ -46,6 +46,11 @@ const geologica = Geologica({
   weight: ['400', '900'],
 })
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: { default: 'YEDA вЂ” dostavka edy', template: '%s | YEDA' },

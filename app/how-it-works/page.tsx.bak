@@ -56,16 +56,16 @@ export default function HowItWorksPage() {
 
       <div style={{ position: 'relative', zIndex: 2, maxWidth: '780px', margin: '0 auto', padding: '0 24px' }}>
 
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div className="hiw-header" style={{ textAlign: 'center', marginBottom: '64px' }}>
           <h1 style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '48px', fontWeight: 900, color: '#FF5A1F', lineHeight: 1.2, marginBottom: '16px' }}>
             Еда, которую хочется заказать ещё до того, как проголодался
           </h1>
           <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '18px', color: '#3D2E28', lineHeight: 1.7, maxWidth: '600px', margin: '0 auto 32px' }}>
             Выбирайте любимые блюда, оформляйте заказ за пару минут — и уже через 30–60 минут вкусный обед или ужин будет у вашей двери.
           </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/menu" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Заказать еду</Link>
-            <Link href="/menu" style={{ background: 'transparent', color: '#FF5A1F', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none', border: '2px solid #FF5A1F' }}>Посмотреть меню</Link>
+          <div className="hiw-header-btns" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/menu" className="hiw-header-btn" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Заказать еду</Link>
+            <Link href="/menu" className="hiw-header-btn" style={{ background: 'transparent', color: '#FF5A1F', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none', border: '2px solid #FF5A1F' }}>Посмотреть меню</Link>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export default function HowItWorksPage() {
           <h2 style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '32px', fontWeight: 900, color: '#433932', textAlign: 'center', marginBottom: '32px' }}>5 шагов до вкусного</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {steps.map((step) => (
-              <div key={step.num} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', background: 'rgba(255,255,255,0.65)', borderRadius: '24px', padding: '24px 28px', backdropFilter: 'blur(8px)' }}>
+              <div key={step.num} className="hiw-step" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', background: 'rgba(255,255,255,0.65)', borderRadius: '24px', padding: '24px 28px', backdropFilter: 'blur(8px)' }}>
                 <div style={{ minWidth: '56px', height: '56px', borderRadius: '50%', background: '#FF5A1F', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-comfortaa)', fontSize: '20px', fontWeight: 900, color: '#fff', flexShrink: 0 }}>
                   {step.num}
                 </div>
@@ -81,7 +81,7 @@ export default function HowItWorksPage() {
                   <div style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '22px', fontWeight: 700, color: '#433932', marginBottom: '6px' }}>{step.title}</div>
                   <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '17px', color: '#3D2E28', lineHeight: 1.6, marginBottom: step.micro || step.btn ? '8px' : '0' }}>{step.text}</div>
                   {step.micro && <div style={{ fontFamily: 'var(--font-geologica)', fontSize: '15px', color: '#FF5A1F', fontStyle: 'italic', marginBottom: step.btn ? '12px' : '0' }}>{step.micro}</div>}
-                  {step.btn && <Link href={step.btn.href} style={{ display: 'inline-block', background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '14px', padding: '10px 24px', borderRadius: '50px', textDecoration: 'none' }}>{step.btn.text}</Link>}
+                  {step.btn && <Link href={step.btn.href} className="hiw-btn" style={{ display: 'inline-block', background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '14px', padding: '10px 24px', borderRadius: '50px', textDecoration: 'none' }}>{step.btn.text}</Link>}
                 </div>
               </div>
             ))}
@@ -104,19 +104,19 @@ export default function HowItWorksPage() {
               </div>
             ))}
           </div>
-          <Link href="/menu" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Подобрать еду</Link>
+          <Link href="/menu" className="hiw-btn" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Подобрать еду</Link>
         </div>
 
         <div style={{ marginBottom: '48px', background: 'rgba(255,90,31,0.08)', borderRadius: '32px', padding: '40px', textAlign: 'center' }}>
           <h2 style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '26px', fontWeight: 900, color: '#433932', marginBottom: '12px' }}>Не знаете, что заказать?</h2>
           <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '16px', color: '#3D2E28', marginBottom: '8px' }}>Расскажите YEDA AI, чего хочется сегодня — он поможет определиться.</p>
           <p style={{ fontFamily: 'var(--font-geologica)', fontSize: '14px', color: '#FF5A1F', fontStyle: 'italic', marginBottom: '24px' }}>«Хочу что-нибудь сытное, но не слишком тяжёлое, без острого»</p>
-          <Link href="/ai-chat" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Спросить AI</Link>
+          <Link href="/ai-chat" className="hiw-btn" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', padding: '14px 36px', borderRadius: '50px', textDecoration: 'none' }}>Спросить AI</Link>
         </div>
 
         <div style={{ textAlign: 'center', paddingTop: '16px' }}>
           <h2 style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '28px', fontWeight: 900, color: '#433932', marginBottom: '24px' }}>Выбирайте еду. Мы позаботимся об остальном.</h2>
-          <Link href="/menu" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '18px', padding: '18px 48px', borderRadius: '50px', textDecoration: 'none' }}>Заказать в YEDA</Link>
+          <Link href="/menu" className="hiw-btn" style={{ background: '#FF5A1F', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '18px', padding: '18px 48px', borderRadius: '50px', textDecoration: 'none' }}>Заказать в YEDA</Link>
         </div>
 
       </div>

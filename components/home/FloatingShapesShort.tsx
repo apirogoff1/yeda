@@ -1,7 +1,8 @@
 'use client'
 import { useMemo } from 'react'
-const emojis = ['᯵4', '᯵5', '᯵0', '᯴b', '᯵6', '᯴7', '᯴a', '᯵2', '᯴5', '᯳d', '᯴4', '᯵a', '᯵d', '᯵1']
+const emojis = ['🍓', '🥕', '🫐', '🍋', '🥦', '🍇', '🍊', '🥒', '🍅', '🌽', '🍄', '🧅', '🥝', '🍑']
 const css = `
+@media (max-width: 767px) { .float-shape-short { opacity: 0.08 !important; } }
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
@@ -24,7 +25,7 @@ export default function FloatingShapesShort() {
       emoji: emojis[i % emojis.length],
       duration: 10 + (i % 8) * 2,
       delay: (i % 6) * 1.2,
-      opacity: 0.4 + (i % 3) * 0.15,
+      opacity: 0.15 + (i % 3) * 0.08,
     }))
   }, [])
   return (

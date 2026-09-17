@@ -1,7 +1,8 @@
-﻿'use client'
+'use client'
 import FloatingShapes from '@/components/home/FloatingShapes'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const pillStyle = (bg: string) => ({
   display: 'inline-block',
@@ -15,10 +16,22 @@ const pillStyle = (bg: string) => ({
   transform: 'rotate(-1deg)',
 })
 
+const pillStyleMob = (bg: string) => ({
+  display: 'inline-block',
+  backgroundColor: bg,
+  color: '#fff',
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 700,
+  fontSize: '13px',
+  borderRadius: '50px',
+  padding: '6px 16px',
+  transform: 'rotate(-1deg)',
+})
+
 const brushes = [
   { src: '/photo_yeda/brushes/brush-carrot.png', top: -184, left: 316, w: 900, rotate: -30 },
   { src: '/photo_yeda/brushes/brush-skyblue.png', top: 914, left: 338, w: 880, rotate: -15 },
-  { src: '/photo_yeda/brushes/brush-blue.png', top: -30, left: 966, w: 820, rotate: 90 },
+  { src: '/photo_yeda/brushes/brush-blue.png', top: -30, left: 967, w: 820, rotate: 90 },
   { src: '/photo_yeda/brushes/brush-zucchini.png', top: 526, left: -199, w: 860, rotate: -102 },
   { src: '/photo_yeda/brushes/brush-strawberry.png', top: 1039, left: 845, w: 880, rotate: 125 },
   { src: '/photo_yeda/brushes/brush-blue.png', top: 1650, left: 745, w: 860, rotate: -125 },
@@ -30,9 +43,9 @@ const brushes = [
 ]
 
 const drops = [
-  { src: '/photo_yeda/brushes/drop-pink.png', top: 629, left: 668, w: 580, rotate: -30 },
-  { src: '/photo_yeda/brushes/drop-blue.png', top: 777, left: 981, w: 560, rotate: 50 },
-  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 1253, left: 63, w: 860, rotate: -150 },
+  { src: '/photo_yeda/brushes/drop-pink.png', top: 621, left: 827, w: 580, rotate: -30 },
+  { src: '/photo_yeda/brushes/drop-blue.png', top: 903, left: 1243, w: 560, rotate: 50 },
+  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 1180, left: -74, w: 860, rotate: -150 },
 ]
 
 const veggies = [
@@ -44,7 +57,7 @@ const veggies = [
   { src: '/photo_yeda/vegetables/strawberry.png', top: 618, left: 2, w: 185, rotate: 12 },
   { src: '/photo_yeda/vegetables/strawberry.png', top: 1816, left: 1249, w: 185, rotate: -15 },
   { src: '/photo_yeda/vegetables/tomato.png', top: 1380, left: 40, w: 210, rotate: -18 },
-  { src: '/photo_yeda/vegetables/pepper.png', top: 591, left: 548, w: 300, rotate: 22 },
+  { src: '/photo_yeda/vegetables/pepper.png', top: 609, left: 636, w: 300, rotate: 22 },
   { src: '/photo_yeda/vegetables/raspberry.png', top: 1773, left: 853, w: 175, rotate: -12 },
   { src: '/photo_yeda/vegetables/raspberry.png', top: 323, left: 802, w: 175, rotate: 15 },
   { src: '/photo_yeda/vegetables/carrot_1.png', top: 1662, left: 84, w: 212, rotate: 18 },
@@ -80,230 +93,473 @@ const float = (i: number) => ({
   transition: { duration: 4 + i * 0.4, repeat: Infinity, ease: 'easeInOut' as const }
 })
 
+// MOBILE DATA
+const brushesMob = [
+  { src: '/photo_yeda/brushes/brush-carrot.png', top: -60, left: -80, w: 380, rotate: -30 },
+  { src: '/photo_yeda/brushes/brush-skyblue.png', top: 300, left: 160, w: 360, rotate: -15 },
+  { src: '/photo_yeda/brushes/brush-blue.png', top: 620, left: -60, w: 340, rotate: 90 },
+  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 960, left: 140, w: 360, rotate: -102 },
+  { src: '/photo_yeda/brushes/brush-strawberry.png', top: 1280, left: -80, w: 360, rotate: 125 },
+  { src: '/photo_yeda/brushes/brush-raspberry.png', top: 1600, left: 100, w: 360, rotate: 10 },
+  { src: '/photo_yeda/brushes/brush-blue.png', top: 1920, left: -60, w: 340, rotate: -125 },
+  { src: '/photo_yeda/brushes/brush-carrot.png', top: 2240, left: 120, w: 360, rotate: 40 },
+  { src: '/photo_yeda/brushes/brush-skyblue.png', top: 2560, left: -40, w: 360, rotate: 215 },
+  { src: '/photo_yeda/brushes/brush-zucchini.png', top: 2880, left: 100, w: 360, rotate: 42 },
+  { src: '/photo_yeda/brushes/brush-raspberry.png', top: 3200, left: -40, w: 360, rotate: -18 },
+]
+
+const dropsMob = [
+  { src: '/photo_yeda/brushes/drop-pink.png', top: 480, left: 240, w: 200, rotate: -30 },
+  { src: '/photo_yeda/brushes/drop-blue.png', top: 900, left: 20, w: 190, rotate: 50 },
+  { src: '/photo_yeda/brushes/drop-green.png', top: 1500, left: 260, w: 190, rotate: -20 },
+  { src: '/photo_yeda/brushes/drop-orange.png', top: 2100, left: 30, w: 190, rotate: 30 },
+]
+
+const veggiesMob = [
+  { src: '/photo_yeda/vegetables/broccoli.png', top: 200, left: 260, w: 100, rotate: -63 },
+  { src: '/photo_yeda/vegetables/strawberry.png', top: 380, left: 20, w: 85, rotate: 12 },
+  { src: '/photo_yeda/vegetables/pepper.png', top: 560, left: 290, w: 110, rotate: 22 },
+  { src: '/photo_yeda/vegetables/avocado.png', top: 820, left: 30, w: 110, rotate: -30 },
+  { src: '/photo_yeda/vegetables/tomato.png', top: 1100, left: 280, w: 90, rotate: -18 },
+  { src: '/photo_yeda/vegetables/carrot_1.png', top: 1340, left: 20, w: 90, rotate: 18 },
+  { src: '/photo_yeda/vegetables/raspberry.png', top: 1580, left: 290, w: 80, rotate: -12 },
+  { src: '/photo_yeda/vegetables/zucchini_1.png', top: 1820, left: 30, w: 100, rotate: 20 },
+  { src: '/photo_yeda/vegetables/blood-orange.png', top: 2060, left: 270, w: 120, rotate: 15 },
+  { src: '/photo_yeda/vegetables/pineapple.png', top: 2300, left: 20, w: 100, rotate: 10 },
+  { src: '/photo_yeda/vegetables/blackberry.png', top: 2540, left: 280, w: 80, rotate: 70 },
+  { src: '/photo_yeda/vegetables/avocado.png', top: 2780, left: 20, w: 110, rotate: 15 },
+]
+
+const dishesMob = [
+  { src: '/photo_yeda/illustrations/burger_illustration_2-Photoroom.png', top: 130, left: 210, w: 140, rotate: 8 },
+  { src: '/photo_yeda/illustrations/sushi_6.png', top: 700, left: 240, w: 130, rotate: 10 },
+  { src: '/photo_yeda/illustrations/shish_kebab_2.png', top: 1200, left: 210, w: 130, rotate: -8 },
+  { src: '/photo_yeda/illustrations/donat.png', top: 1760, left: 240, w: 130, rotate: 12 },
+  { src: '/photo_yeda/illustrations/pizza_illustration_1-Photoroom.png', top: 2320, left: 210, w: 130, rotate: -6 },
+]
+
 export default function HeroSection() {
   return (
-    <div style={{ position: 'relative', width: '100%', minHeight: '3200px', overflow: 'hidden', background: '#F5EAD8' }}>
-      <FloatingShapes />
+    <>
+      {/* ===== DESKTOP ===== */}
+      <div className="hidden md:block" style={{ position: 'relative', width: '100%', minHeight: '3200px', overflow: 'hidden', background: '#F5EAD8' }}>
+        <FloatingShapes />
 
-      {brushes.map((b, i) => (
-        <motion.div key={`b${i}`}
-          initial={{ opacity: 0, scale: 0.85 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.1 }}
-          style={{ position: 'absolute', top: b.top, left: b.left, width: b.w, zIndex: 1, pointerEvents: 'none' }}>
-          <Image src={b.src} alt="" width={b.w} height={Math.round(b.w * 0.6)} style={{ objectFit: 'contain', transform: `rotate(${b.rotate}deg)`, opacity: 0.6 }} />
+        {brushes.map((b, i) => (
+          <motion.div key={`b${i}`}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, delay: 0.1 }}
+            style={{ position: 'absolute', top: b.top, left: b.left, width: b.w, zIndex: 1, pointerEvents: 'none' }}>
+            <Image src={b.src} alt="" width={b.w} height={Math.round(b.w * 0.6)} style={{ objectFit: 'contain', transform: `rotate(${b.rotate}deg)`, opacity: 0.6 }} />
+          </motion.div>
+        ))}
+
+        {drops.map((d, i) => (
+          <motion.div key={`d${i}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.15 }}
+            style={{ position: 'absolute', top: d.top, left: d.left, width: d.w, zIndex: 2, pointerEvents: 'none' }}>
+            <Image src={d.src} alt="" width={d.w} height={d.w} style={{ objectFit: 'contain', transform: `rotate(${d.rotate}deg)`, opacity: 0.6 }} />
+          </motion.div>
+        ))}
+
+        {dishes.map((dish, i) => (
+          <motion.div key={`dish${i}`}
+            {...dishAnimations[i]}
+            style={{ position: 'absolute', top: dish.top, left: dish.left, width: dish.w, zIndex: 11, pointerEvents: 'none', transform: `rotate(${dish.rotate}deg)` }}>
+            <Image src={dish.src} alt="" width={dish.w} height={dish.w} style={{ objectFit: 'contain' }} />
+          </motion.div>
+        ))}
+
+        {veggies.map((v, i) => (
+          <motion.div key={`v${i}`}
+            initial={{ opacity: 0, scale: 0.7 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            {...float(i)}
+            style={{ position: 'absolute', top: v.top, left: v.left, width: v.w, zIndex: 3, pointerEvents: 'none' }}>
+            <Image src={v.src} alt="" width={v.w} height={v.w} style={{ objectFit: 'contain', transform: `rotate(${v.rotate}deg)` }} />
+          </motion.div>
+        ))}
+
+        {/* BLOCK:block-title */}
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.3 }}
+          style={{ position: 'absolute', top: 135, left: 43, zIndex: 10 }}>
+          <Image src="/photo_yeda/title-bubble.png" alt="EDA, KOTORAYA RADUET." width={510} height={272} style={{ width: 'clamp(272px, 38.25vw, 510px)', height: 'auto' }} />
         </motion.div>
-      ))}
 
-      {drops.map((d, i) => (
-        <motion.div key={`d${i}`}
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.0, delay: 0.15 }}
-          style={{ position: 'absolute', top: d.top, left: d.left, width: d.w, zIndex: 2, pointerEvents: 'none' }}>
-          <Image src={d.src} alt="" width={d.w} height={d.w} style={{ objectFit: 'contain', transform: `rotate(${d.rotate}deg)`, opacity: 0.6 }} />
+        {/* BLOCK:block-tags */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}
+          style={{ position: 'absolute', top: 828, left: 407, zIndex: 10, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <span style={pillStyle('#FF4D00')}>\u0421\u0432\u0435\u0436\u0438\u0435 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u044b</span>
+          <span style={pillStyle('#5B2D8E')}>\u0411\u044b\u0441\u0442\u0440\u0430\u044f \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430</span>
+          <span style={pillStyle('#1A7A2E')}>\u041f\u043e\u043b\u0435\u0437\u043d\u044b\u0435 \u0431\u043b\u044e\u0434\u0430</span>
         </motion.div>
-      ))}
 
-      {dishes.map((dish, i) => (
-        <motion.div key={`dish${i}`}
-          {...dishAnimations[i]}
-          style={{ position: 'absolute', top: dish.top, left: dish.left, width: dish.w, zIndex: 11, pointerEvents: 'none', transform: `rotate(${dish.rotate}deg)` }}>
-          <Image src={dish.src} alt="" width={dish.w} height={dish.w} style={{ objectFit: 'contain' }} />
+        {/* BLOCK:block-btns */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.7 }}
+          style={{ position: 'absolute', top: 730, left: 294, zIndex: 10, display: 'flex', gap: '16px' }}>
+          <Link href='/cart' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>\u0417\u0430\u043a\u0430\u0437\u0430\u0442\u044c</Link>
+          <Link href='/menu' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent', color: '#5B2D8E', border: '2.5px solid #1a1a1a', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>\u041c\u0435\u043d\u044e</Link>
         </motion.div>
-      ))}
 
-      {veggies.map((v, i) => (
-        <motion.div key={`v${i}`}
-          initial={{ opacity: 0, scale: 0.7 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-          {...float(i)}
-          style={{ position: 'absolute', top: v.top, left: v.left, width: v.w, zIndex: 3, pointerEvents: 'none' }}>
-          <Image src={v.src} alt="" width={v.w} height={v.w} style={{ objectFit: 'contain', transform: `rotate(${v.rotate}deg)` }} />
+        {/* BLOCK:block-fresh */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1085, left: 73, zIndex: 10, maxWidth: '380px' }}>
+          <Image src="/photo_yeda/titles/title-svezhie-produkty-v2.png" alt="Svjezhie produkty kazhdyj den" width={760} height={300} style={{ width: "342px", height: "auto" }} />
         </motion.div>
-      ))}
 
-      {/* BLOCK:block-title */}
-      <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.3 }}
-        style={{ position: 'absolute', top: 135, left: 43, zIndex: 10 }}>
-        <Image src="/photo_yeda/title-bubble.png" alt="EDA, KOTORAYA RADUET." width={510} height={272} style={{ width: 'clamp(272px, 38.25vw, 510px)', height: 'auto' }} />
-      </motion.div>
+        {/* BLOCK:block-fresh-tag-1 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1304, left: 58, zIndex: 10, maxWidth: '380px' }}>
+          <span style={pillStyle('#FF4D00')}>\u041c\u044b \u0437\u0430\u043a\u0443\u043f\u0430\u0435\u043c \u043e\u0432\u043e\u0449\u0438 \u0435\u0436\u0435\u0434\u043d\u0435\u0432\u043d\u043e \u0438 \u0433\u043e\u0442\u043e\u0432\u0438\u043c \u0431\u043b\u044e\u0434\u0430 \u0442\u043e\u043b\u044c\u043a\u043e \u0438\u0437 \u0441\u0432\u0435\u0436\u0438\u0445 \u0438\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u043e\u0432</span>
+        </motion.div>
 
-      {/* BLOCK:block-tags */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}
-        style={{ position: 'absolute', top: 828, left: 407, zIndex: 10, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <span style={pillStyle('#FF4D00')}>Свежие продукты</span>
-        <span style={pillStyle('#5B2D8E')}>Быстрая доставка</span>
-        <span style={pillStyle('#1A7A2E')}>Полезные блюда</span>
-      </motion.div>
+        {/* BLOCK:block-delivery */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1301, left: 901, zIndex: 10, maxWidth: '360px' }}>
+          <Image src="/photo_yeda/titles/title-dostavka-golubika.png" alt="Dostavka za 30-60 minut" width={360} height={120} style={{ width: '360px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-btns */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.7 }}
-        style={{ position: 'absolute', top: 730, left: 294, zIndex: 10, display: 'flex', gap: '16px' }}>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Заказать</button>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '18px', backgroundColor: 'transparent', color: '#5B2D8E', border: '2.5px solid #1a1a1a', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer' }}>Меню</button>
-      </motion.div>
+        {/* BLOCK:block-delivery-tag-1 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1476, left: 950, zIndex: 10 }}>
+          <span style={pillStyle('#29B6F6')}>\u041a\u0443\u0440\u044c\u0435\u0440\u044b \u0432\u0441\u0435\u0433\u0434\u0430 \u0440\u044f\u0434\u043e\u043c</span>
+        </motion.div>
 
-      {/* BLOCK:block-fresh */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1085, left: 73, zIndex: 10, maxWidth: '380px' }}>
-        <Image src="/photo_yeda/titles/title-svezhie-produkty-v2.png" alt="Svjezhie produkty kazhdyj den" width={760} height={300} style={{ width: "342px", height: "auto" }} />
-      </motion.div>
+        {/* BLOCK:block-delivery-tag-2 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1511, left: 925, zIndex: 10 }}>
+          <span style={pillStyle('#29B6F6')}>\u0414\u043e\u0441\u0442\u0430\u0432\u0438\u043c \u0433\u043e\u0440\u044f\u0447\u0438\u043c \u043f\u0440\u044f\u043c\u043e \u043a \u0432\u0430\u0448\u0435\u0439 \u0434\u0432\u0435\u0440\u0438</span>
+        </motion.div>
 
-      {/* BLOCK:block-fresh-tag-1 */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1304, left: 58, zIndex: 10, maxWidth: '380px' }}>
-        <span style={pillStyle('#FF4D00')}>Мы закупаем овощи ежедневно и готовим блюда только из свежих ингредиентов</span>
-      </motion.div>
+        {/* BLOCK:block-how */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1500, left: 60, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-kak-rabotaet-arbuz.png" alt="Kak eto rabotaet" width={288} height={96} style={{ width: '288px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-delivery */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1301, left: 901, zIndex: 10, maxWidth: '360px' }}>
-        <Image src="/photo_yeda/titles/title-dostavka-golubika.png" alt="Dostavka za 30-60 minut" width={360} height={120} style={{ width: '360px', height: 'auto' }} />
-      </motion.div>
+        {/* BLOCK:block-how-steps */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1620, left: 60, zIndex: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            {['\u0412\u044b\u0431\u0438\u0440\u0430\u0435\u0442\u0435 \u0431\u043b\u044e\u0434\u0430', '\u041e\u043f\u043b\u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0435', '\u0413\u043e\u0442\u043e\u0432\u0438\u043c', '\u0414\u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u043c', '\u041d\u0430\u0441\u043b\u0430\u0436\u0434\u0430\u0435\u0442\u0435\u0441\u044c'].map((s, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+                <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '52px', fontWeight: 900, color: '#FF4D00' }}>{i + 1}</span>
+                <span style={pillStyle(['#FF4D00','#5B2D8E','#1A7A2E','#29B6F6','#A855F7'][i])}>{s}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
-      {/* BLOCK:block-delivery-tag-1 */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1476, left: 950, zIndex: 10 }}>
-        <span style={pillStyle('#29B6F6')}>Курьеры всегда рядом</span>
-      </motion.div>
+        {/* BLOCK:block-why */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1966, left: 686, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-pochemu-vybirayt-klubnika.png" alt="Pochemu vybirayut YEDA" width={274} height={86} style={{ width: '274px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-delivery-tag-2 */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1511, left: 925, zIndex: 10 }}>
-        <span style={pillStyle('#29B6F6')}>Доставим горячим прямо к вашей двери</span>
-      </motion.div>
+        {/* BLOCK:block-why-tags */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2204, left: 705, zIndex: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {[
+              ['\u0421\u0432\u0435\u0436\u0438\u0435 \u0438\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u044b', '#1A7A2E'],
+              ['\u041f\u043e\u043d\u044f\u0442\u043d\u044b\u0439 \u0441\u043e\u0441\u0442\u0430\u0432', '#FF4D00'],
+              ['\u041f\u0440\u043e\u0437\u0440\u0430\u0447\u043d\u044b\u0435 \u0446\u0435\u043d\u044b', '#5B2D8E'],
+              ['\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c', '#29B6F6'],
+              ['\u041f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 24/7', '#A855F7'],
+            ].map(([s, c], i) => (
+              <span key={i} style={pillStyle(c)}>\u2714 {s}</span>
+            ))}
+          </div>
+        </motion.div>
 
-      {/* BLOCK:block-how */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1500, left: 60, zIndex: 10 }}>
-        <Image src="/photo_yeda/titles/title-kak-rabotaet-arbuz.png" alt="Kak eto rabotaet" width={288} height={96} style={{ width: '288px', height: 'auto' }} />
-      </motion.div>
-      {/* BLOCK:block-how-steps */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1620, left: 60, zIndex: 10 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          {['Выбираете блюда', 'Оплачиваете', 'Готовим', 'Доставляем', 'Наслаждаетесь'].map((s, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-              <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '52px', fontWeight: 900, color: '#FF4D00' }}>{i + 1}</span>
-              <span style={pillStyle(['#FF4D00','#5B2D8E','#1A7A2E','#29B6F6','#A855F7'][i])}>{s}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+        {/* BLOCK:block-ai */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2086, left: 129, zIndex: 10, maxWidth: '420px' }}>
+          <Image src="/photo_yeda/titles/title-ii-racion-limon.png" alt="II pomozhet vybrat racion" width={420} height={120} style={{ width: '420px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-why */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 1966, left: 686, zIndex: 10 }}>
-        <Image src="/photo_yeda/titles/title-pochemu-vybirayt-klubnika.png" alt="Pochemu vybirayut YEDA" width={274} height={86} style={{ width: '274px', height: 'auto' }} />
-      </motion.div>
-      {/* BLOCK:block-why-tags */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2204, left: 705, zIndex: 10 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {[
-            ['Свежие ингредиенты', '#1A7A2E'],
-            ['Понятный состав', '#FF4D00'],
-            ['Прозрачные цены', '#5B2D8E'],
-            ['Доставка каждый день', '#29B6F6'],
-            ['Поддержка 24/7', '#A855F7'],
-          ].map(([s, c], i) => (
-            <span key={i} style={pillStyle(c)}>✔ {s}</span>
-          ))}
-        </div>
-      </motion.div>
+        {/* BLOCK:block-ai-tag-1 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2315, left: 122, zIndex: 10, maxWidth: '420px' }}>
+          <span style={pillStyle('#A855F7')}>\u0420\u0430\u0441\u0441\u043a\u0430\u0436\u0438\u0442\u0435 \u043e \u043f\u0440\u0435\u0434\u043f\u043e\u0447\u0442\u0435\u043d\u0438\u044f\u0445, \u0430\u043b\u043b\u0435\u0440\u0433\u0438\u044f\u0445 \u0438 \u0446\u0435\u043b\u044f\u0445 \u2014 YEDA \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0438\u0442 \u043c\u0435\u043d\u044e</span>
+        </motion.div>
 
-      {/* BLOCK:block-ai */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2086, left: 129, zIndex: 10, maxWidth: '420px' }}>
-        <Image src="/photo_yeda/titles/title-ii-racion-limon.png" alt="II pomozhet vybrat racion" width={420} height={120} style={{ width: '420px', height: 'auto' }} />
-      </motion.div>
+        {/* BLOCK:block-ai-btn */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2415, left: 251, zIndex: 10, maxWidth: '420px' }}>
+          <button onClick={() => window.location.href = '/ai-chat'} onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#9333EA')} onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#A855F7')} style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '17px', backgroundColor: '#A855F7', color: '#fff', border: 'none', borderRadius: '50px', padding: '16px 44px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(168, 85, 247, 0.5)', transition: 'background-color 0.2s ease' }}>\u041f\u043e\u043f\u0440\u043e\u0431\u043e\u0432\u0430\u0442\u044c AI</button>
+        </motion.div>
 
-      {/* BLOCK:block-ai-tag-1 */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2315, left: 122, zIndex: 10, maxWidth: '420px' }}>
-        <span style={pillStyle('#A855F7')}>Расскажите о предпочтениях, аллергиях и целях — YEDA предложит меню</span>
-      </motion.div>
+        {/* BLOCK:block-sub */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2604, left: 677, zIndex: 10, maxWidth: '400px' }}>
+          <Image src="/photo_yeda/titles/title-poluchayte-v2.png" alt="Poluchayte lyubimuyu edu regulyarno" width={400} height={120} style={{ width: '400px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-ai-btn */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2375, left: 129, zIndex: 10, maxWidth: '420px' }}>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '16px', backgroundColor: '#A855F7', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 36px', cursor: 'pointer' }}>Попробовать AI</button>
-      </motion.div>
+        {/* BLOCK:block-sub-input */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2971, left: 678, zIndex: 10, maxWidth: '300px' }}>
+          <input type="email" placeholder="\u0412\u0430\u0448 email" style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', padding: '14px 20px', borderRadius: '50px', border: '2px solid #999999', outline: 'none', color: '#333333', width: '100%', backgroundColor: 'rgba(255,255,255,0.5)' }} />
+        </motion.div>
 
-      {/* BLOCK:block-sub */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2604, left: 677, zIndex: 10, maxWidth: '400px' }}>
-        <Image src="/photo_yeda/titles/title-poluchayte-v2.png" alt="Poluchayte lyubimuyu edu regulyarno" width={400} height={120} style={{ width: '400px', height: 'auto' }} />
-      </motion.div>
+        {/* BLOCK:block-sub-btn */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2944, left: 937, zIndex: 10 }}>
+          <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '15px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 28px', cursor: 'pointer', whiteSpace: 'nowrap' }}>\u041f\u043e\u0434\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f</button>
+        </motion.div>
 
-      {/* BLOCK:block-sub-input */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2971, left: 678, zIndex: 10, maxWidth: '300px' }}>
-        <input type="email" placeholder="Ваш email" style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', padding: '14px 20px', borderRadius: '50px', border: '2px solid #999999', outline: 'none', color: '#333333', width: '100%', backgroundColor: 'rgba(255,255,255,0.5)' }} />
-      </motion.div>
+        {/* BLOCK:block-sub-tag-1 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2848, left: 685, zIndex: 10, maxWidth: '400px' }}>
+          <span style={pillStyle('#FF2D6B')}>\u041e\u0444\u043e\u0440\u043c\u0438\u0442\u0435 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443 \u0438 \u043f\u043e\u043b\u0443\u0447\u0430\u0439\u0442\u0435 \u0441\u0432\u0435\u0436\u0438\u0435 \u0431\u043b\u044e\u0434\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c \u0431\u0435\u0437 \u043b\u0438\u0448\u043d\u0438\u0445 \u0437\u0430\u0431\u043e\u0442</span>
+        </motion.div>
 
-      {/* BLOCK:block-sub-btn */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2944, left: 937, zIndex: 10 }}>
-        <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '15px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 28px', cursor: 'pointer', whiteSpace: 'nowrap' }}>Подписаться</button>
-      </motion.div>
+        {/* BLOCK:block-social */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2536, left: 114, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-my-ryadom-ezhevika.png" alt="My vsegda ryadom" width={360} height={120} style={{ width: '360px', height: 'auto' }} />
+        </motion.div>
 
-      {/* BLOCK:block-sub-tag-1 */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2848, left: 685, zIndex: 10, maxWidth: '400px' }}>
-        <span style={pillStyle('#FF2D6B')}>Оформите подписку и получайте свежие блюда каждый день без лишних забот</span>
-      </motion.div>
+        {/* BLOCK:block-social-links */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2788, left: 110, zIndex: 10 }}>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+            {[
+              { label: 'Telegram', color: '#29B6F6', href: 'https://t.me/yeda' },
+              { label: 'MAX',      color: '#FF4D00', href: '#' },
+              { label: 'Email',    color: '#5B2D8E', href: 'mailto:hello@yeda.ru' },
+              { label: 'Telefon',  color: '#1A237E', href: 'tel:+78001234567' },
+            ].map((c, i) => (
+              <motion.a key={i} href={c.href} whileHover={{ scale: 1.15 }} style={{ width: '72px', height: '72px', borderRadius: '50%', backgroundColor: c.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '11px', textDecoration: 'none', textAlign: 'center', lineHeight: 1.2, transform: `translateY(${i % 2 === 0 ? -8 : 8}px)` }}>
+                {c.label}
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
 
-      {/* BLOCK:block-social */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2536, left: 114, zIndex: 10 }}>
-        <Image src="/photo_yeda/titles/title-my-ryadom-ezhevika.png" alt="My vsegda ryadom" width={360} height={120} style={{ width: '360px', height: 'auto' }} />
-      </motion.div>
-      {/* BLOCK:block-social-links */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2788, left: 110, zIndex: 10 }}>
-        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-          {[
-            { label: 'Telegram', color: '#29B6F6', href: 'https://t.me/yeda' },
-            { label: 'MAX',      color: '#FF4D00', href: '#' },
-            { label: 'Email',    color: '#5B2D8E', href: 'mailto:hello@yeda.ru' },
-            { label: 'Telefon',  color: '#1A237E', href: 'tel:+78001234567' },
-          ].map((c, i) => (
-            <motion.a key={i} href={c.href} whileHover={{ scale: 1.15 }} style={{ width: '72px', height: '72px', borderRadius: '50%', backgroundColor: c.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '11px', textDecoration: 'none', textAlign: 'center', lineHeight: 1.2, transform: `translateY(${i % 2 === 0 ? -8 : 8}px)` }}>
-              {c.label}
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
+        {/* BLOCK:block-footer */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2979, left: 39, zIndex: 10 }}>
+          <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '48px', fontWeight: 900, color: '#FF4D00' }}>YEDA</span>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#999', marginTop: '16px' }}>\u00a9 2025 YEDA. \u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b.</p>
+        </motion.div>
+      </div>
 
-      {/* BLOCK:block-footer */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', top: 2979, left: 39, zIndex: 10 }}>
-        <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '48px', fontWeight: 900, color: '#FF4D00' }}>YEDA</span>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', color: '#999', marginTop: '16px' }}>© 2025 YEDA. Все права защищены.</p>
-      </motion.div>
+      {/* ===== MOBILE ===== */}
+      <div className="block md:hidden" style={{ position: 'relative', width: '100%', minHeight: '3500px', overflow: 'hidden', background: '#F5EAD8' }}>
 
-    </div>
+        {brushesMob.map((b, i) => (
+          <motion.div key={`mb${i}`}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, delay: 0.1 }}
+            style={{ position: 'absolute', top: b.top, left: b.left, width: b.w, zIndex: 1, pointerEvents: 'none' }}>
+            <Image src={b.src} alt="" width={b.w} height={Math.round(b.w * 0.6)} style={{ objectFit: 'contain', transform: `rotate(${b.rotate}deg)`, opacity: 0.6 }} />
+          </motion.div>
+        ))}
+
+        {dropsMob.map((d, i) => (
+          <motion.div key={`md${i}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.15 }}
+            style={{ position: 'absolute', top: d.top, left: d.left, width: d.w, zIndex: 2, pointerEvents: 'none' }}>
+            <Image src={d.src} alt="" width={d.w} height={d.w} style={{ objectFit: 'contain', transform: `rotate(${d.rotate}deg)`, opacity: 0.6 }} />
+          </motion.div>
+        ))}
+
+        {dishesMob.map((dish, i) => (
+          <motion.div key={`mdish${i}`}
+            {...dishAnimations[i]}
+            style={{ position: 'absolute', top: dish.top, left: dish.left, width: dish.w, zIndex: 11, pointerEvents: 'none', transform: `rotate(${dish.rotate}deg)` }}>
+            <Image src={dish.src} alt="" width={dish.w} height={dish.w} style={{ objectFit: 'contain' }} />
+          </motion.div>
+        ))}
+
+        {veggiesMob.map((v, i) => (
+          <motion.div key={`mv${i}`}
+            initial={{ opacity: 0, scale: 0.7 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            {...float(i)}
+            style={{ position: 'absolute', top: v.top, left: v.left, width: v.w, zIndex: 3, pointerEvents: 'none' }}>
+            <Image src={v.src} alt="" width={v.w} height={v.w} style={{ objectFit: 'contain', transform: `rotate(${v.rotate}deg)` }} />
+          </motion.div>
+        ))}
+
+        {/* MOB: title */}
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.3 }}
+          style={{ position: 'absolute', top: 40, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/title-bubble.png" alt="EDA, KOTORAYA RADUET." width={320} height={170} style={{ width: '320px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: btns */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 0.7 }}
+          style={{ position: 'absolute', top: 420, left: 16, zIndex: 10, display: 'flex', gap: '12px' }}>
+          <Link href='/cart' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '15px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 32px', cursor: 'pointer' }}>\u0417\u0430\u043a\u0430\u0437\u0430\u0442\u044c</Link>
+          <Link href='/menu' style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '15px', backgroundColor: 'transparent', color: '#5B2D8E', border: '2.5px solid #1a1a1a', borderRadius: '50px', padding: '14px 32px', cursor: 'pointer' }}>\u041c\u0435\u043d\u044e</Link>
+        </motion.div>
+
+        {/* MOB: tags */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}
+          style={{ position: 'absolute', top: 510, left: 16, zIndex: 10, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <span style={pillStyleMob('#FF4D00')}>\u0421\u0432\u0435\u0436\u0438\u0435 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u044b</span>
+          <span style={pillStyleMob('#5B2D8E')}>\u0411\u044b\u0441\u0442\u0440\u0430\u044f \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430</span>
+          <span style={pillStyleMob('#1A7A2E')}>\u041f\u043e\u043b\u0435\u0437\u043d\u044b\u0435 \u0431\u043b\u044e\u0434\u0430</span>
+        </motion.div>
+
+        {/* MOB: fresh */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 700, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-svezhie-produkty-v2.png" alt="Svjezhie produkty" width={280} height={120} style={{ width: '280px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: fresh-tag */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 860, left: 16, zIndex: 10, maxWidth: '300px' }}>
+          <span style={pillStyleMob('#FF4D00')}>\u041c\u044b \u0437\u0430\u043a\u0443\u043f\u0430\u0435\u043c \u043e\u0432\u043e\u0449\u0438 \u0435\u0436\u0435\u0434\u043d\u0435\u0432\u043d\u043e \u0438 \u0433\u043e\u0442\u043e\u0432\u0438\u043c \u0431\u043b\u044e\u0434\u0430 \u0442\u043e\u043b\u044c\u043a\u043e \u0438\u0437 \u0441\u0432\u0435\u0436\u0438\u0445 \u0438\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u043e\u0432</span>
+        </motion.div>
+
+        {/* MOB: delivery */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1000, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-dostavka-golubika.png" alt="Dostavka" width={280} height={100} style={{ width: '280px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: delivery-tag-1 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1120, left: 16, zIndex: 10 }}>
+          <span style={pillStyleMob('#29B6F6')}>\u041a\u0443\u0440\u044c\u0435\u0440\u044b \u0432\u0441\u0435\u0433\u0434\u0430 \u0440\u044f\u0434\u043e\u043c</span>
+        </motion.div>
+
+        {/* MOB: delivery-tag-2 */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1160, left: 16, zIndex: 10, maxWidth: '300px' }}>
+          <span style={pillStyleMob('#29B6F6')}>\u0414\u043e\u0441\u0442\u0430\u0432\u0438\u043c \u0433\u043e\u0440\u044f\u0447\u0438\u043c \u043f\u0440\u044f\u043c\u043e \u043a \u0432\u0430\u0448\u0435\u0439 \u0434\u0432\u0435\u0440\u0438</span>
+        </motion.div>
+
+        {/* MOB: how */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1300, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-kak-rabotaet-arbuz.png" alt="Kak eto rabotaet" width={220} height={74} style={{ width: '220px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: how-steps */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1400, left: 16, zIndex: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            {['\u0412\u044b\u0431\u0438\u0440\u0430\u0435\u0442\u0435 \u0431\u043b\u044e\u0434\u0430', '\u041e\u043f\u043b\u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0435', '\u0413\u043e\u0442\u043e\u0432\u0438\u043c', '\u0414\u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u043c', '\u041d\u0430\u0441\u043b\u0430\u0436\u0434\u0430\u0435\u0442\u0435\u0441\u044c'].map((s, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '36px', fontWeight: 900, color: '#FF4D00' }}>{i + 1}</span>
+                <span style={pillStyleMob(['#FF4D00','#5B2D8E','#1A7A2E','#29B6F6','#A855F7'][i])}>{s}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* MOB: why */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1760, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-pochemu-vybirayt-klubnika.png" alt="Pochemu vybirayut YEDA" width={220} height={70} style={{ width: '220px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: why-tags */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 1880, left: 16, zIndex: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {[
+              ['\u0421\u0432\u0435\u0436\u0438\u0435 \u0438\u043d\u0433\u0440\u0435\u0434\u0438\u0435\u043d\u0442\u044b', '#1A7A2E'],
+              ['\u041f\u043e\u043d\u044f\u0442\u043d\u044b\u0439 \u0441\u043e\u0441\u0442\u0430\u0432', '#FF4D00'],
+              ['\u041f\u0440\u043e\u0437\u0440\u0430\u0447\u043d\u044b\u0435 \u0446\u0435\u043d\u044b', '#5B2D8E'],
+              ['\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c', '#29B6F6'],
+              ['\u041f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 24/7', '#A855F7'],
+            ].map(([s, c], i) => (
+              <span key={i} style={pillStyleMob(c)}>\u2714 {s}</span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* MOB: ai */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2120, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-ii-racion-limon.png" alt="II racion" width={300} height={86} style={{ width: '300px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: ai-tag */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2260, left: 16, zIndex: 10, maxWidth: '300px' }}>
+          <span style={pillStyleMob('#A855F7')}>\u0420\u0430\u0441\u0441\u043a\u0430\u0436\u0438\u0442\u0435 \u043e \u043f\u0440\u0435\u0434\u043f\u043e\u0447\u0442\u0435\u043d\u0438\u044f\u0445, \u0430\u043b\u043b\u0435\u0440\u0433\u0438\u044f\u0445 \u0438 \u0446\u0435\u043b\u044f\u0445 \u2014 YEDA \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0438\u0442 \u043c\u0435\u043d\u044e</span>
+        </motion.div>
+
+        {/* MOB: ai-btn */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2360, left: 16, zIndex: 10 }}>
+          <button onClick={() => window.location.href = '/ai-chat'} onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#9333EA')} onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#A855F7')} style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '15px', backgroundColor: '#A855F7', color: '#fff', border: 'none', borderRadius: '50px', padding: '14px 36px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(168, 85, 247, 0.5)', transition: 'background-color 0.2s ease' }}>\u041f\u043e\u043f\u0440\u043e\u0431\u043e\u0432\u0430\u0442\u044c AI</button>
+        </motion.div>
+
+        {/* MOB: social */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2480, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-my-ryadom-ezhevika.png" alt="My vsegda ryadom" width={260} height={86} style={{ width: '260px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: social-links */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2620, left: 16, zIndex: 10 }}>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            {[
+              { label: 'Telegram', color: '#29B6F6', href: 'https://t.me/yeda' },
+              { label: 'MAX',      color: '#FF4D00', href: '#' },
+              { label: 'Email',    color: '#5B2D8E', href: 'mailto:hello@yeda.ru' },
+              { label: 'Telefon',  color: '#1A237E', href: 'tel:+78001234567' },
+            ].map((c, i) => (
+              <motion.a key={i} href={c.href} whileHover={{ scale: 1.15 }} style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: c.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'var(--font-comfortaa)', fontWeight: 700, fontSize: '10px', textDecoration: 'none', textAlign: 'center', lineHeight: 1.2, transform: `translateY(${i % 2 === 0 ? -6 : 6}px)` }}>
+                {c.label}
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* MOB: sub */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2760, left: 16, zIndex: 10 }}>
+          <Image src="/photo_yeda/titles/title-poluchayte-v2.png" alt="Poluchayte" width={280} height={86} style={{ width: '280px', height: 'auto' }} />
+        </motion.div>
+
+        {/* MOB: sub-tag */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2900, left: 16, zIndex: 10, maxWidth: '300px' }}>
+          <span style={pillStyleMob('#FF2D6B')}>\u041e\u0444\u043e\u0440\u043c\u0438\u0442\u0435 \u043f\u043e\u0434\u043f\u0438\u0441\u043a\u0443 \u0438 \u043f\u043e\u043b\u0443\u0447\u0430\u0439\u0442\u0435 \u0441\u0432\u0435\u0436\u0438\u0435 \u0431\u043b\u044e\u0434\u0430 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c</span>
+        </motion.div>
+
+        {/* MOB: sub-input */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 2980, left: 16, zIndex: 10, width: '240px' }}>
+          <input type="email" placeholder="\u0412\u0430\u0448 email" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', padding: '12px 18px', borderRadius: '50px', border: '2px solid #999999', outline: 'none', color: '#333333', width: '100%', backgroundColor: 'rgba(255,255,255,0.5)' }} />
+        </motion.div>
+
+        {/* MOB: sub-btn */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 3040, left: 16, zIndex: 10 }}>
+          <button style={{ fontFamily: 'var(--font-comfortaa)', fontWeight: 900, fontSize: '14px', backgroundColor: '#FF4D00', color: '#fff', border: 'none', borderRadius: '50px', padding: '12px 24px', cursor: 'pointer', whiteSpace: 'nowrap' }}>\u041f\u043e\u0434\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f</button>
+        </motion.div>
+
+        {/* MOB: footer */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          style={{ position: 'absolute', top: 3140, left: 16, zIndex: 10 }}>
+          <span style={{ fontFamily: 'var(--font-comfortaa)', fontSize: '36px', fontWeight: 900, color: '#FF4D00' }}>YEDA</span>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: '#999', marginTop: '12px' }}>\u00a9 2025 YEDA. \u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b.</p>
+        </motion.div>
+
+      </div>
+    </>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

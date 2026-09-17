@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 const emojis = ['🍓', '🥕', '🫐', '🍋', '🥦', '🍇', '🍊', '🥒', '🍅', '🌽', '🍄', '🧅', '🥝', '🍑']
 
 const css = `
+@media (max-width: 767px) { .float-shape { opacity: 0.12 !important; } }
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
@@ -19,10 +20,10 @@ const css = `
 
 export default function FloatingShapes() {
   const items = useMemo(() => {
-    return Array.from({ length: 300 }, (_, i) => ({
+    return Array.from({ length: 600 }, (_, i) => ({
       id: i,
       x: (i * 7.3) % 95,
-      y: (i * 83) % 4800,
+      y: (i * 83) % 14000,
       size: 5 + (i % 3) * 2,
       emoji: emojis[i % emojis.length],
       duration: 10 + (i % 8) * 2,

@@ -155,14 +155,13 @@ export default function SubscriptionPage() {
 
         {/* HERO */}
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <h1 style={{ fontFamily: font1, fontSize: '48px', fontWeight: 900, color: accent, lineHeight: 1.2, marginBottom: '20px' }}>
+          <h1 className="sub-header" style={{ fontFamily: font1, fontSize: '48px', fontWeight: 900, color: accent, lineHeight: 1.2, marginBottom: '20px' }}>
             Еда по расписанию.<br />Жизнь — без расписания.
           </h1>
           <p style={{ fontFamily: font2, fontSize: '18px', color: muted, lineHeight: 1.7, maxWidth: '620px', margin: '0 auto 32px' }}>
             Настройте регулярные заказы один раз и больше не думайте каждый день, что приготовить.
           </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="#plans" style={btn}>Выбрать подписку</a>
+          <div className="sub-btn-group" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/ai-chat" style={btnOutline}>Спросить AI</Link>
           </div>
         </div>
@@ -172,7 +171,7 @@ export default function SubscriptionPage() {
           <h2 style={{ fontFamily: font1, fontSize: '32px', fontWeight: 900, color: dark, marginBottom: '32px', textAlign: 'center' }}>Тарифы</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {plans.map((plan, i) => (
-              <div key={i} style={{ ...card, marginBottom: 0, position: 'relative', minHeight: 'auto', border: plan.popular ? `2px solid ${accent}` : '2px solid transparent' }}>
+              <div key={i} className="sub-card" style={{ ...card, marginBottom: 0, position: 'relative', minHeight: 'auto', border: plan.popular ? `2px solid ${accent}` : '2px solid transparent' }}>
                 {plan.popular && (
                   <div style={{ display: 'inline-block', background: accent, color: '#fff', fontFamily: font1, fontWeight: 700, fontSize: '12px', padding: '3px 12px', borderRadius: '6px', marginBottom: '12px' }}>
                     Самый популярный
@@ -199,9 +198,9 @@ export default function SubscriptionPage() {
                   )}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {(openDishes[i] ? plan.dishes : plan.dishes.slice(0, 3)).map((d, j) => (
-                      <div key={j} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: 'rgba(123,63,160,0.06)', borderRadius: '10px' }}>
+                      <div key={j} className="sub-dish-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: 'rgba(123,63,160,0.06)', borderRadius: '10px' }}>
                         <span style={{ fontFamily: 'var(--font-geologica)', fontSize: '15px', color: '#3D2E28' }}>{d.name}</span>
-                        <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
+                        <div className="sub-dish-prices" style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
                           <span style={{ fontFamily: 'var(--font-geologica)', fontSize: '13px', color: '#7B3FA0', fontWeight: 700, minWidth: '60px', textAlign: 'right' }}>{d.price}</span>
                           <span style={{ fontFamily: 'var(--font-geologica)', fontSize: '13px', color: '#555', minWidth: '70px', textAlign: 'right' }}>{d.kcal}</span>
                         </div>
@@ -223,8 +222,8 @@ export default function SubscriptionPage() {
                     ))}
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <a href="#" style={btn}>{plan.btn}</a>
+                <div className="sub-btn-group" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <a href={`/payment?plan=${plan.name}`} style={btn}>{plan.btn}</a>
                   <a href={`/ai-chat?plan=${plan.name}`} style={btnOutline}>Подобрать с AI</a>
                 </div>
               </div>
@@ -233,7 +232,7 @@ export default function SubscriptionPage() {
         </div>
 
         {/* КАК РАБОТАЕТ */}
-        <div style={card}>
+        <div className="sub-card" style={card}>
           <h2 style={{ fontFamily: font1, fontSize: '28px', fontWeight: 900, color: dark, marginBottom: '8px' }}>Как работает подписка</h2>
           <p style={{ fontFamily: font2, fontSize: '16px', color: muted, marginBottom: '32px' }}>Настроили один раз — дальше YEDA помогает сама</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
@@ -253,7 +252,7 @@ export default function SubscriptionPage() {
         </div>
 
         {/* ПРЕИМУЩЕСТВА */}
-        <div style={card}>
+        <div className="sub-card" style={card}>
           <h2 style={{ fontFamily: font1, fontSize: '28px', fontWeight: 900, color: dark, marginBottom: '8px' }}>Преимущества</h2>
           <p style={{ fontFamily: font2, fontSize: '16px', color: muted, marginBottom: '24px' }}>Меньше решений — больше свободного времени</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -273,7 +272,7 @@ export default function SubscriptionPage() {
         </div>
 
         {/* FAQ */}
-        <div style={card}>
+        <div className="sub-card" style={card}>
           <h2 style={{ fontFamily: font1, fontSize: '28px', fontWeight: 900, color: dark, marginBottom: '24px' }}>FAQ по подписке</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {faqs.map((faq, i) => (
@@ -291,8 +290,7 @@ export default function SubscriptionPage() {
           <p style={{ fontFamily: font2, fontSize: '17px', color: muted, lineHeight: 1.7, marginBottom: '32px' }}>
             Выберите тариф или спросите YEDA AI — мы поможем найти удобный формат регулярных заказов.
           </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="#plans" style={btn}>Выбрать подписку</a>
+          <div className="sub-btn-group" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/ai-chat" style={btnOutline}>Спросить AI</Link>
           </div>
         </div>

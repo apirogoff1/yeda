@@ -1,7 +1,7 @@
 import { RegisterForm } from '@/features/auth'
 export default function RegisterPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-slate-900">
+    <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#FFF8F4', position: 'relative' }}>
       <RegisterForm />
     </main>
   )

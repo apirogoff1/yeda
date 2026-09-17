@@ -1,10 +1,8 @@
 import { LoginForm } from '@/features/auth'
-import { TelegramLoginButton } from '@/features/telegram/ui/TelegramLoginButton'
 export default function LoginPage() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 gap-4 bg-slate-900">
+    <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', background: '#FFF8F4', position: 'relative' }}>
       <LoginForm />
-      <TelegramLoginButton />
     </main>
   )
 }

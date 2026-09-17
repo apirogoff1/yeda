@@ -34,3 +34,14 @@ next-env.d.ts
 /lib/generated/prisma
 public/photo_yeda/photos_dishes_bak/
 public/photo_yeda/photos_dishes_bak/
+
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+*.bak6
+*.bak7
+*.bak8
+fix.py
+*.sql

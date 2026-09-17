@@ -122,6 +122,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const clearCart = async () => {
+    localStorage.removeItem('yeda_cart')
     if (authed) {
       await fetch('/api/cart', {
         method: 'DELETE',

@@ -22,9 +22,14 @@ function PaymentContent() {
   const [address, setAddress] = useState('')
   const [savedAddresses, setSavedAddresses] = useState<string[]>([])
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('yeda_addresses') || '[]')
-    setSavedAddresses(saved)
-    if (saved.length > 0) setAddress(saved[0])
+    fetch('/api/addresses')
+      .then(r => r.json())
+      .then(data => {
+        const addrs = (data.addresses || []).map((a: any) => a.value)
+        setSavedAddresses(addrs)
+        if (addrs.length > 0) setAddress(addrs[0])
+      })
+      .catch(() => {})
   }, [])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

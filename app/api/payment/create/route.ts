@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import { prisma } from '@/shared/lib/prisma'
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
+  },
+})
 
 async function getUserId(): Promise<string | null> {
   try {
@@ -47,9 +53,9 @@ export async function POST(req: NextRequest) {
     ).join('')
 
     try {
-      await resend.emails.send({
-        from: 'YEDA <onboarding@resend.dev>',
-        to: ['apirogoff1@gmail.com'],
+      await transporter.sendMail({
+        from: `YEDA <${process.env.GMAIL_USER}>`,
+        to: 'apirogoff1@gmail.com',
         subject: `New order YEDA - ${total} RUB`,
         html: `
           <h2 style="color:#FF4D00">New order!</h2>
